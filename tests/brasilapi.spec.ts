@@ -19,7 +19,7 @@ describe('BrasilAPI', () => {
 		sut = new BrasilAPI();
 	});
 
-	it('should get a bank by its code', async () => {
+	it('should fetch a bank by its code', async () => {
 		const res = await sut.bank.fetch('157');
 
 		assert.ok(res);
@@ -50,5 +50,20 @@ describe('BrasilAPI', () => {
 				true,
 			);
 		}
+	});
+
+	it('should fetch a CEP', async () => {
+		const res = await sut.cep.fetch('08226021');
+
+		assert.ok(res);
+		assert.deepStrictEqual(res.data, {
+			cep: '08226021',
+			state: 'SP',
+			city: 'São Paulo',
+			neighborhood: 'Cidade Antônio Estevão de Carvalho',
+			street: 'Rua 18 de Abril',
+			service: 'correios-alt',
+			location: { type: 'Point', coordinates: {} },
+		});
 	});
 });
