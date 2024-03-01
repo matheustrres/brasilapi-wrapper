@@ -27,8 +27,8 @@ export class BrasilAPIBank extends Source implements IBank {
 		);
 
 		const pagin = new Paginator<Bank>(res)
-			.page(params?.page)
-			.limit(params?.limit)
+			.setPage(params?.page)
+			.setLimit(params?.limit)
 			.take(params?.take)
 			.skip(params?.skip);
 

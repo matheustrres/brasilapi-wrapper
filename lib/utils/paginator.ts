@@ -1,10 +1,14 @@
+/**
+ * @author matheustrres
+ * @see {@link [gist](https://gist.github.com/matheustrres/5d6b1647a547e009b33c1cb7117a7e27)}
+ */
 export class Paginator<T> {
 	#page = 1;
-	#defLimit = 25;
+	readonly #defLimit = 25;
 
 	constructor(public items: T[] = []) {}
 
-	page(val = this.#page): this {
+	setPage(val = this.#page): this {
 		this.#page = val;
 
 		return this;
@@ -18,12 +22,12 @@ export class Paginator<T> {
 
 	take(val = this.#defLimit): this {
 		this.#validateLimit(val);
-		this.page(1);
+		this.setPage(1);
 
 		return this.#sliceItems(0, val);
 	}
 
-	limit(val = this.#defLimit): this {
+	setLimit(val = this.#defLimit): this {
 		this.#validateLimit(val);
 
 		const start = (this.#page - 1) * this.#defLimit;
