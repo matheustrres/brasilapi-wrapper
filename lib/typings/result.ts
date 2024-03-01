@@ -1,6 +1,4 @@
-export type BrasilAPIResponse<T> = {
-	timestamp: string;
-} & (
+export type BrasilAPIResponse<T> =
 	| (T & {
 			message?: never;
 			type?: never;
@@ -14,8 +12,7 @@ export type BrasilAPIResponse<T> = {
 				message: string;
 				service?: string;
 			}>;
-	  })
-);
+	  });
 
 type Success<T> = {
 	data: T;
