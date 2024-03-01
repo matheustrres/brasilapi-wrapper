@@ -5,7 +5,7 @@ export type Bank = {
 	fullName: string;
 };
 
-export type Cep = {
+export type CEP = {
 	cep: string;
 	state: string;
 	city: string;

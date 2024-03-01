@@ -1,21 +1,21 @@
 import { Source } from './source';
 
 import { HttpsClient } from '../clients/http-client';
-import { type Cep } from '../typings';
+import { type CEP } from '../typings';
 import { type BrasilAPIResponse, type Result } from '../typings/result';
 
-interface ICep {
-	fetch(cep: string): Promise<Result<Cep>>;
+interface ICEP {
+	fetch(cep: string): Promise<Result<CEP>>;
 }
 
-export class BrasilAPICep extends Source implements ICep {
+export class BrasilAPICEP extends Source implements ICEP {
 	static #URL = 'https://brasilapi.com.br/api/cep/v2';
 
 	async fetch(cep: string) {
-		const res = await HttpsClient.GET<BrasilAPIResponse<Cep>>(
-			`${BrasilAPICep.#URL}/${cep}`,
+		const res = await HttpsClient.GET<BrasilAPIResponse<CEP>>(
+			`${BrasilAPICEP.#URL}/${cep}`,
 		);
 
-		return this.followUp<Cep>(res);
+		return this.followUp<CEP>(res);
 	}
 }
