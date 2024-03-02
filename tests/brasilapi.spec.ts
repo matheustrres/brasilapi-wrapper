@@ -79,6 +79,43 @@ describe('BrasilAPI', () => {
 		});
 	});
 
+	it('should list all brokers', async () => {
+		const res = await sut.broker.list({
+			page: 2,
+			limit: 3,
+		});
+
+		assert.ok(res);
+		assert.equal(res.data!.length, 3);
+
+		for (const item of res.data!) {
+			assert.deepStrictEqual(
+				objHasKeys(item, [
+					'bairro',
+					'cep',
+					'cnpj',
+					'codigo_cvm',
+					'complemento',
+					'data_inicio_situacao',
+					'data_patrimonio_liquido',
+					'data_registro',
+					'email',
+					'logradouro',
+					'municipio',
+					'nome_social',
+					'nome_comercial',
+					'pais',
+					'status',
+					'telefone',
+					'type',
+					'uf',
+					'valor_patrimonio_liquido',
+				]),
+				true,
+			);
+		}
+	});
+
 	it('should fetch a CEP from v1', async () => {
 		const res = await sut.cep.fetchV1('08226021');
 
