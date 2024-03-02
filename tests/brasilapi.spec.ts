@@ -243,6 +243,22 @@ describe('BrasilAPI', () => {
 		});
 	});
 
+	it('should list all cities', async () => {
+		const res = await sut.CPTEC.listCities({
+			page: 3,
+			limit: 4,
+		});
+
+		assert.ok(res);
+		assert.equal(res.data!.length, 4);
+		assert.deepStrictEqual(res.data, [
+			{ nome: 'São Félix do Coribe', id: 4800, estado: 'BA' },
+			{ nome: 'São Félix do Piauí', id: 4801, estado: 'PI' },
+			{ nome: 'São Félix do Tocantins', id: 4802, estado: 'TO' },
+			{ nome: 'São Félix do Xingu', id: 4803, estado: 'PA' },
+		]);
+	});
+
 	it('should fetch a DDD', async () => {
 		const res = await sut.DDDs.fetch('21');
 
