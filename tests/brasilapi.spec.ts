@@ -20,7 +20,7 @@ describe('BrasilAPI', () => {
 	});
 
 	it('should fetch a bank by its code', async () => {
-		const res = await sut.bank.fetch('157');
+		const res = await sut.banks.fetch('157');
 
 		assert.ok(res);
 		assert.deepEqual(res, {
@@ -36,7 +36,7 @@ describe('BrasilAPI', () => {
 	});
 
 	it('should list all banks', async () => {
-		const res = await sut.bank.list({
+		const res = await sut.banks.list({
 			limit: 10,
 			take: 5,
 		});
@@ -53,7 +53,7 @@ describe('BrasilAPI', () => {
 	});
 
 	it('should fetch a broker by its CNPJ', async () => {
-		const res = await sut.broker.fetch('02332886000104');
+		const res = await sut.brokers.fetch('02332886000104');
 
 		assert.ok(res);
 		assert.deepStrictEqual(res.data, {
@@ -80,7 +80,7 @@ describe('BrasilAPI', () => {
 	});
 
 	it('should list all brokers', async () => {
-		const res = await sut.broker.list({
+		const res = await sut.brokers.list({
 			page: 2,
 			limit: 3,
 		});
@@ -117,7 +117,7 @@ describe('BrasilAPI', () => {
 	});
 
 	it('should fetch a CEP from v1', async () => {
-		const res = await sut.cep.fetchV1('08226021');
+		const res = await sut.CEPs.fetchV1('08226021');
 
 		assert.ok(res);
 		assert.deepStrictEqual(res.data, {
@@ -131,7 +131,7 @@ describe('BrasilAPI', () => {
 	});
 
 	it('should fetch a CEP from v2', async () => {
-		const res = await sut.cep.fetchV2('22041011');
+		const res = await sut.CEPs.fetchV2('22041011');
 
 		assert.ok(res);
 		assert.deepStrictEqual(res.data, {
@@ -146,7 +146,7 @@ describe('BrasilAPI', () => {
 	});
 
 	it('should fetch a CNPJ', async () => {
-		const res = await sut.cnpj.fetch('19131243000197');
+		const res = await sut.CNPJs.fetch('19131243000197');
 
 		assert.ok(res);
 		assert.deepStrictEqual(res.data, {

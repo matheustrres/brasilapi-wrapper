@@ -4,8 +4,8 @@ import { BrasilAPICEP } from './sources/cep';
 import { BrasilAPICNPJ } from './sources/cnpj';
 
 export class BrasilAPI {
-	readonly bank = new BrasilAPIBank();
-	readonly broker = new BrasilAPIBroker();
-	readonly cep = new BrasilAPICEP();
-	readonly cnpj = new BrasilAPICNPJ();
+	readonly banks = new BrasilAPIBank();
+	readonly brokers = new BrasilAPIBroker();
+	readonly CEPs = new BrasilAPICEP();
+	readonly CNPJs = new BrasilAPICNPJ();
 }
