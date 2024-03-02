@@ -52,6 +52,33 @@ describe('BrasilAPI', () => {
 		}
 	});
 
+	it('should fetch a broker by its CNPJ', async () => {
+		const res = await sut.broker.fetch('02332886000104');
+
+		assert.ok(res);
+		assert.deepStrictEqual(res.data, {
+			cnpj: '02332886000104',
+			type: 'CORRETORAS',
+			nome_social: 'XP INVESTIMENTOS CCTVM S.A.',
+			nome_comercial: 'XP INVESTIMENTOS',
+			status: 'EM FUNCIONAMENTO NORMAL',
+			email: 'fabricio.almeida@xpi.com.br',
+			telefone: '30272237',
+			cep: '22440032',
+			pais: '',
+			uf: 'RJ',
+			municipio: 'RIO DE JANEIRO',
+			bairro: 'LEBLON',
+			complemento: '5º ANDAR',
+			logradouro: 'AVENIDA ATAULFO DE PAIVA 153',
+			data_patrimonio_liquido: '2022-12-31',
+			valor_patrimonio_liquido: '8288904369.58',
+			codigo_cvm: '3247',
+			data_inicio_situacao: '1998-02-10',
+			data_registro: '1997-12-05',
+		});
+	});
+
 	it('should fetch a CEP from v1', async () => {
 		const res = await sut.cep.fetchV1('08226021');
 
