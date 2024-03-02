@@ -105,6 +105,12 @@ export type CNAE = {
 	descricao: string;
 };
 
+export type City = {
+	nome: string;
+	estado: string;
+	id: string;
+};
+
 export type DDD = {
 	state: string;
 	cities: string[];
