@@ -242,4 +242,38 @@ describe('BrasilAPI', () => {
 			descricao_identificador_matriz_filial: 'MATRIZ',
 		});
 	});
+
+	it('should fetch a DDD', async () => {
+		const res = await sut.DDDs.fetch('21');
+
+		assert.ok(res);
+		assert.deepStrictEqual(res.data, {
+			state: 'RJ',
+			cities: [
+				'TERESÓPOLIS',
+				'TANGUÁ',
+				'SEROPÉDICA',
+				'SÃO JOÃO DE MERITI',
+				'SÃO GONÇALO',
+				'RIO DE JANEIRO',
+				'RIO BONITO',
+				'QUEIMADOS',
+				'PARACAMBI',
+				'NOVA IGUAÇU',
+				'NITERÓI',
+				'NILÓPOLIS',
+				'MESQUITA',
+				'MARICÁ',
+				'MANGARATIBA',
+				'MAGÉ',
+				'JAPERI',
+				'ITAGUAÍ',
+				'ITABORAÍ',
+				'GUAPIMIRIM',
+				'DUQUE DE CAXIAS',
+				'CACHOEIRAS DE MACACU',
+				'BELFORD ROXO',
+			],
+		});
+	});
 });
