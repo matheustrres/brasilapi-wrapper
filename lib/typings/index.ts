@@ -105,6 +105,11 @@ export type CNAE = {
 	descricao: string;
 };
 
+export type DDD = {
+	state: string;
+	cities: string[];
+};
+
 export type ListParams = {
 	take?: number;
 	skip?: number;
