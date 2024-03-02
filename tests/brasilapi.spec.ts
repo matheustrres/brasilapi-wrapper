@@ -66,6 +66,21 @@ describe('BrasilAPI', () => {
 		});
 	});
 
+	it('should fetch a CEP from v2', async () => {
+		const res = await sut.cep.fetchV2('22041011');
+
+		assert.ok(res);
+		assert.deepStrictEqual(res.data, {
+			cep: '22041011',
+			state: 'RJ',
+			city: 'Rio de Janeiro',
+			neighborhood: 'Copacabana',
+			street: 'Rua Santa Clara - de 1 ao fim - lado ímpar',
+			service: 'correios-alt',
+			location: { type: 'Point', coordinates: {} },
+		});
+	});
+
 	it('should fetch a CNPJ', async () => {
 		const res = await sut.cnpj.fetch('19131243000197');
 
