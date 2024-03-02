@@ -5,15 +5,15 @@ import { type CEP } from '../typings';
 import { type BrasilAPIResponse, type Result } from '../typings/result';
 
 interface ICEP {
-	fetch(cep: string): Promise<Result<CEP>>;
+	fetchV1(cep: string): Promise<Result<CEP>>;
 }
 
 export class BrasilAPICEP extends Source implements ICEP {
-	static #URL = 'https://brasilapi.com.br/api/cep/v2';
+	static #URL = 'https://brasilapi.com.br/api/cep';
 
-	async fetch(cep: string) {
+	async fetchV1(cep: string) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<CEP>>(
-			`${BrasilAPICEP.#URL}/${cep}`,
+			`${BrasilAPICEP.#URL}/v1/${cep}`,
 		);
 
 		return this.followUp<CEP>(res);

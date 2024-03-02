@@ -12,7 +12,7 @@ export type CEP = {
 	neighborhood: string;
 	street: string;
 	service: string;
-	location: Location;
+	location?: Location;
 };
 
 export type Location = {

@@ -52,8 +52,8 @@ describe('BrasilAPI', () => {
 		}
 	});
 
-	it('should fetch a CEP', async () => {
-		const res = await sut.cep.fetch('08226021');
+	it('should fetch a CEP from v1', async () => {
+		const res = await sut.cep.fetchV1('08226021');
 
 		assert.ok(res);
 		assert.deepStrictEqual(res.data, {
@@ -62,8 +62,7 @@ describe('BrasilAPI', () => {
 			city: 'São Paulo',
 			neighborhood: 'Cidade Antônio Estevão de Carvalho',
 			street: 'Rua 18 de Abril',
-			service: 'correios-alt',
-			location: { type: 'Point', coordinates: {} },
+			service: 'widenet',
 		});
 	});
 
