@@ -9,11 +9,11 @@ interface IDDD {
 }
 
 export class BrasilAPIDDD extends Source implements IDDD {
-	static readonly #URL = 'https://brasilapi.com.br/api/ddd/v1';
+	URL = 'https://brasilapi.com.br/api/ddd/v1';
 
 	async fetch(ddd: string): Promise<Result<DDD>> {
 		const res = await HttpsClient.GET<BrasilAPIResponse<DDD>>(
-			`${BrasilAPIDDD.#URL}/${ddd}`,
+			`${this.URL}/${ddd}`,
 		);
 
 		return this.followUp<DDD>(res);

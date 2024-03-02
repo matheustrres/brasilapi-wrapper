@@ -11,20 +11,18 @@ interface IBank {
 }
 
 export class BrasilAPIBank extends Source implements IBank {
-	static #URL = 'https://brasilapi.com.br/api/banks/v1';
+	URL = 'https://brasilapi.com.br/api/banks/v1';
 
 	async fetch(code: string) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<Bank>>(
-			`${BrasilAPIBank.#URL}/${code}`,
+			`${this.URL}/${code}`,
 		);
 
 		return this.followUp<Bank>(res);
 	}
 
 	async list(params?: ListParams) {
-		const res = await HttpsClient.GET<BrasilAPIResponse<Bank[]>>(
-			BrasilAPIBank.#URL,
-		);
+		const res = await HttpsClient.GET<BrasilAPIResponse<Bank[]>>(this.URL);
 
 		const pagin = new Paginator<Bank>(res)
 			.setPage(params?.page)

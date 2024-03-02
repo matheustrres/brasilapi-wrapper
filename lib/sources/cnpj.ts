@@ -9,11 +9,11 @@ interface ICNPJ {
 }
 
 export class BrasilAPICNPJ extends Source implements ICNPJ {
-	static #URL = 'https://brasilapi.com.br/api/cnpj/v1';
+	URL = 'https://brasilapi.com.br/api/cnpj/v1';
 
 	async fetch(cnpj: string) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<CNPJ>>(
-			`${BrasilAPICNPJ.#URL}/${cnpj}`,
+			`${this.URL}/${cnpj}`,
 		);
 
 		return this.followUp<CNPJ>(res);

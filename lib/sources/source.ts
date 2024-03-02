@@ -1,6 +1,8 @@
 import { type BrasilAPIResponse, type Result } from '../typings/result';
 
-export class Source {
+export abstract class Source {
+	protected abstract readonly URL: string;
+
 	protected followUp<T>(res: BrasilAPIResponse<T>): Result<T> {
 		const timestamp = new Date().toISOString();
 

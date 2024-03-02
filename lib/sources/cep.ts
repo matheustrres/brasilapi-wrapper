@@ -10,11 +10,11 @@ interface ICEP {
 }
 
 export class BrasilAPICEP extends Source implements ICEP {
-	static #URL = 'https://brasilapi.com.br/api/cep';
+	URL = 'https://brasilapi.com.br/api/cep';
 
 	async fetchV1(cep: string) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<CEP>>(
-			`${BrasilAPICEP.#URL}/v1/${cep}`,
+			`${this.URL}/v1/${cep}`,
 		);
 
 		return this.followUp<CEP>(res);
@@ -22,7 +22,7 @@ export class BrasilAPICEP extends Source implements ICEP {
 
 	async fetchV2(cep: string) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<CEP>>(
-			`${BrasilAPICEP.#URL}/v2/${cep}`,
+			`${this.URL}/v2/${cep}`,
 		);
 
 		return this.followUp<CEP>(res);

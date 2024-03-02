@@ -11,20 +11,18 @@ interface IBroker {
 }
 
 export class BrasilAPIBroker extends Source implements IBroker {
-	static #URL = 'https://brasilapi.com.br/api/cvm/corretoras/v1';
+	URL = 'https://brasilapi.com.br/api/cvm/corretoras/v1';
 
 	async fetch(cnpj: string): Promise<Result<Broker>> {
 		const res = await HttpsClient.GET<BrasilAPIResponse<Broker>>(
-			`${BrasilAPIBroker.#URL}/${cnpj}`,
+			`${this.URL}/${cnpj}`,
 		);
 
 		return this.followUp<Broker>(res);
 	}
 
 	async list(params?: ListParams | undefined): Promise<Result<Broker[]>> {
-		const res = await HttpsClient.GET<BrasilAPIResponse<Broker[]>>(
-			BrasilAPIBroker.#URL,
-		);
+		const res = await HttpsClient.GET<BrasilAPIResponse<Broker[]>>(this.URL);
 
 		const pagin = new Paginator<Broker>(res)
 			.setPage(params?.page)
