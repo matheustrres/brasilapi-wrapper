@@ -10,7 +10,7 @@ interface ICPTEC {
 }
 
 export class BrasilAPICPTEC extends Source implements ICPTEC {
-	URL = 'https://brasilapi.com.br/api/cptec/v1';
+	protected readonly URL = 'https://brasilapi.com.br/api/cptec/v1';
 
 	async listCities(params?: ListParams) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<City[]>>(

@@ -10,7 +10,7 @@ interface ICEP {
 }
 
 export class BrasilAPICEP extends Source implements ICEP {
-	URL = 'https://brasilapi.com.br/api/cep';
+	protected readonly URL = 'https://brasilapi.com.br/api/cep';
 
 	async fetchV1(cep: string) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<CEP>>(

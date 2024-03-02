@@ -11,7 +11,7 @@ interface IBank {
 }
 
 export class BrasilAPIBank extends Source implements IBank {
-	URL = 'https://brasilapi.com.br/api/banks/v1';
+	protected readonly URL = 'https://brasilapi.com.br/api/banks/v1';
 
 	async fetch(code: string) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<Bank>>(

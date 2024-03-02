@@ -11,7 +11,7 @@ interface IBroker {
 }
 
 export class BrasilAPIBroker extends Source implements IBroker {
-	URL = 'https://brasilapi.com.br/api/cvm/corretoras/v1';
+	protected readonly URL = 'https://brasilapi.com.br/api/cvm/corretoras/v1';
 
 	async fetch(cnpj: string): Promise<Result<Broker>> {
 		const res = await HttpsClient.GET<BrasilAPIResponse<Broker>>(
