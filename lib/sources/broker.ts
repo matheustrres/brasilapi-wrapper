@@ -7,13 +7,13 @@ import { Paginator } from '../utils/paginator';
 
 interface IBroker {
 	fetch(cnpj: string): Promise<Result<Broker>>;
-	list(params?: ListParams): Promise<Result<Broker[]>>;
+	list(params?: ListParams): Promise<Result<Paginator<Broker>>>;
 }
 
 export class BrasilAPIBroker extends Source implements IBroker {
 	protected readonly URL = 'https://brasilapi.com.br/api/cvm/corretoras/v1';
 
-	async fetch(cnpj: string): Promise<Result<Broker>> {
+	async fetch(cnpj: string) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<Broker>>(
 			`${this.URL}/${cnpj}`,
 		);
@@ -21,15 +21,16 @@ export class BrasilAPIBroker extends Source implements IBroker {
 		return this.followUp<Broker>(res);
 	}
 
-	async list(params?: ListParams | undefined): Promise<Result<Broker[]>> {
+	async list(params?: ListParams | undefined) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<Broker[]>>(this.URL);
 
-		const pagin = new Paginator<Broker>(res)
-			.setPage(params?.page)
-			.setLimit(params?.limit)
-			.take(params?.take)
-			.skip(params?.skip);
-
-		return this.followUp<Broker[]>(pagin.items);
+		return this.followUp(
+			new Paginator({
+				items: res,
+				itemsPerPage: params?.limit || 20,
+				skip: params?.skip,
+				take: params?.take,
+			}),
+		);
 	}
 }

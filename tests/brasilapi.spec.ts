@@ -3,15 +3,6 @@ import { beforeEach, describe, it } from 'node:test';
 
 import { BrasilAPI } from '@/lib/brasilapi';
 
-const objHasKeys = <T extends object>(
-	obj: T,
-	expectedKeys: string[],
-): boolean => {
-	const objKeys = Object.keys(obj);
-
-	return expectedKeys.every((k) => objKeys.includes(k));
-};
-
 describe('BrasilAPI', () => {
 	let sut: BrasilAPI;
 
@@ -42,14 +33,40 @@ describe('BrasilAPI', () => {
 		});
 
 		assert.ok(res);
-		assert.equal(res.data!.length, 5);
-
-		for (const item of res.data!) {
-			assert.deepStrictEqual(
-				objHasKeys(item, ['ispb', 'name', 'code', 'fullName']),
-				true,
-			);
-		}
+		assert.equal(res.data!.itemsPerPage, 10);
+		assert.equal(res.data!.loadPages().length, 1);
+		assert.deepStrictEqual(res.data!.loadPage(1), [
+			{
+				ispb: '00000000',
+				name: 'BCO DO BRASIL S.A.',
+				code: 1,
+				fullName: 'Banco do Brasil S.A.',
+			},
+			{
+				ispb: '00000208',
+				name: 'BRB - BCO DE BRASILIA S.A.',
+				code: 70,
+				fullName: 'BRB - BANCO DE BRASILIA S.A.',
+			},
+			{
+				ispb: '00038121',
+				name: 'Selic',
+				code: null,
+				fullName: 'Banco Central do Brasil - Selic',
+			},
+			{
+				ispb: '00038166',
+				name: 'Bacen',
+				code: null,
+				fullName: 'Banco Central do Brasil',
+			},
+			{
+				ispb: '00122327',
+				name: 'SANTINVEST S.A. - CFI',
+				code: 539,
+				fullName: 'SANTINVEST S.A. - CREDITO, FINANCIAMENTO E INVESTIMENTOS',
+			},
+		]);
 	});
 
 	it('should fetch a broker by its CNPJ', async () => {
@@ -81,39 +98,80 @@ describe('BrasilAPI', () => {
 
 	it('should list all brokers', async () => {
 		const res = await sut.brokers.list({
-			page: 2,
-			limit: 3,
+			take: 3,
+			limit: 5,
 		});
 
 		assert.ok(res);
-		assert.equal(res.data!.length, 3);
-
-		for (const item of res.data!) {
-			assert.deepStrictEqual(
-				objHasKeys(item, [
-					'bairro',
-					'cep',
-					'cnpj',
-					'codigo_cvm',
-					'complemento',
-					'data_inicio_situacao',
-					'data_patrimonio_liquido',
-					'data_registro',
-					'email',
-					'logradouro',
-					'municipio',
-					'nome_social',
-					'nome_comercial',
-					'pais',
-					'status',
-					'telefone',
-					'type',
-					'uf',
-					'valor_patrimonio_liquido',
-				]),
-				true,
-			);
-		}
+		assert.equal(res.data!.itemsPerPage, 5);
+		assert.equal(res.data!.loadPages().length, 1);
+		assert.equal(res.data!.loadPage(1).length, 3);
+		assert.deepStrictEqual(res.data!.loadPage(1), [
+			{
+				cnpj: '76621457000185',
+				type: 'CORRETORAS',
+				nome_social: '4UM DTVM S.A.',
+				nome_comercial: '4UM INVESTIMENTOS',
+				status: 'CANCELADA',
+				email: 'controle@4um.com.br',
+				telefone: '33519966',
+				cep: '80420210',
+				pais: 'BRASIL',
+				uf: 'PR',
+				municipio: 'CURITIBA',
+				bairro: 'CENTRO',
+				complemento: '4º ANDAR',
+				logradouro: 'R. VISCONDE DO RIO BRANCO 1488',
+				data_patrimonio_liquido: '2005-12-31',
+				valor_patrimonio_liquido: '4228660.18',
+				codigo_cvm: '2275',
+				data_inicio_situacao: '2006-10-05',
+				data_registro: '1968-01-15',
+			},
+			{
+				cnpj: '33817677000176',
+				type: 'CORRETORAS',
+				nome_social:
+					'ABC BRASIL DISTRIBUIDORA DE TÍTULOS E VALORES MOBILIÁRIOS S.A.',
+				nome_comercial: 'ABC BRASIL CORRETORA',
+				status: 'CANCELADA',
+				email: 'complianceregulatorio@abcbrasil.com.br',
+				telefone: '31702172',
+				cep: '1453000',
+				pais: 'EGITO',
+				uf: 'SP',
+				municipio: 'SÃO PAULO',
+				bairro: 'ITAIM BIBI',
+				complemento: '2º ANDAR',
+				logradouro: 'AV. CIDADE JARDIM, 803',
+				data_patrimonio_liquido: '2002-12-31',
+				valor_patrimonio_liquido: '0.00',
+				codigo_cvm: '3514',
+				data_inicio_situacao: '2002-10-14',
+				data_registro: '2002-10-14',
+			},
+			{
+				cnpj: '10664027000132',
+				type: 'CORRETORAS',
+				nome_social: 'ABERTURA CCVM LTDA',
+				nome_comercial: 'ABERTURA CCVM LTDA',
+				status: 'CANCELADA',
+				email: '',
+				telefone: '',
+				cep: '50010240',
+				pais: 'BRASIL',
+				uf: 'PE',
+				municipio: 'RECIFE',
+				bairro: '',
+				complemento: '',
+				logradouro: 'R DO IMP.D.PEDRO II 239/CJ.102',
+				data_patrimonio_liquido: '1989-12-31',
+				valor_patrimonio_liquido: '5995252.29',
+				codigo_cvm: '329',
+				data_inicio_situacao: '1990-06-12',
+				data_registro: '1986-07-08',
+			},
+		]);
 	});
 
 	it('should fetch a CEP from v1', async () => {
@@ -126,7 +184,7 @@ describe('BrasilAPI', () => {
 			city: 'São Paulo',
 			neighborhood: 'Cidade Antônio Estevão de Carvalho',
 			street: 'Rua 18 de Abril',
-			service: 'widenet',
+			service: 'correios-alt',
 		});
 	});
 
@@ -245,17 +303,17 @@ describe('BrasilAPI', () => {
 
 	it('should list all cities', async () => {
 		const res = await sut.CPTEC.listCities({
-			page: 3,
 			limit: 4,
+			take: 3,
 		});
 
 		assert.ok(res);
-		assert.equal(res.data!.length, 4);
-		assert.deepStrictEqual(res.data, [
-			{ nome: 'São Félix do Coribe', id: 4800, estado: 'BA' },
-			{ nome: 'São Félix do Piauí', id: 4801, estado: 'PI' },
-			{ nome: 'São Félix do Tocantins', id: 4802, estado: 'TO' },
-			{ nome: 'São Félix do Xingu', id: 4803, estado: 'PA' },
+		assert.equal(res.data!.itemsPerPage, 4);
+		assert.equal(res.data!.loadPage(1).length, 3);
+		assert.deepStrictEqual(res.data?.loadPage(1), [
+			{ nome: 'São Benedito', id: 4750, estado: 'CE' },
+			{ nome: 'São Benedito do Rio Preto', id: 4751, estado: 'MA' },
+			{ nome: 'São Benedito do Sul', id: 4752, estado: 'PE' },
 		]);
 	});
 

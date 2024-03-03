@@ -6,7 +6,7 @@ import { type BrasilAPIResponse, type Result } from '../typings/result';
 import { Paginator } from '../utils/paginator';
 
 interface ICPTEC {
-	listCities(params?: ListParams): Promise<Result<City[]>>;
+	listCities(params?: ListParams): Promise<Result<Paginator<City>>>;
 }
 
 export class BrasilAPICPTEC extends Source implements ICPTEC {
@@ -17,12 +17,13 @@ export class BrasilAPICPTEC extends Source implements ICPTEC {
 			`${this.URL}/cidade`,
 		);
 
-		const pagin = new Paginator<City>(res)
-			.setPage(params?.page)
-			.setLimit(params?.limit)
-			.take(params?.take)
-			.skip(params?.skip);
-
-		return this.followUp<City[]>(pagin.items);
+		return this.followUp(
+			new Paginator({
+				items: res,
+				itemsPerPage: params?.limit || 20,
+				skip: params?.skip,
+				take: params?.take,
+			}),
+		);
 	}
 }

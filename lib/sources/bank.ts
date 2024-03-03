@@ -7,7 +7,7 @@ import { Paginator } from '../utils/paginator';
 
 interface IBank {
 	fetch(code: string): Promise<Result<Bank>>;
-	list(params?: ListParams): Promise<Result<Bank[]>>;
+	list(params?: ListParams): Promise<Result<Paginator<Bank>>>;
 }
 
 export class BrasilAPIBank extends Source implements IBank {
@@ -24,12 +24,13 @@ export class BrasilAPIBank extends Source implements IBank {
 	async list(params?: ListParams) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<Bank[]>>(this.URL);
 
-		const pagin = new Paginator<Bank>(res)
-			.setPage(params?.page)
-			.setLimit(params?.limit)
-			.take(params?.take)
-			.skip(params?.skip);
-
-		return this.followUp<Bank[]>(pagin.items);
+		return this.followUp(
+			new Paginator({
+				items: res,
+				itemsPerPage: params?.limit || 20,
+				skip: params?.skip,
+				take: params?.take,
+			}),
+		);
 	}
 }
