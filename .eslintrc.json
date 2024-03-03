@@ -16,6 +16,7 @@
 		"no-extra-semi": "warn",
 		"no-mixed-spaces-and-tabs": "off",
 		"no-tabs": "off",
+		"@typescript-eslint/no-unused-vars": "off",
 		"import-helpers/order-imports": [
 			"warn",
 			{
