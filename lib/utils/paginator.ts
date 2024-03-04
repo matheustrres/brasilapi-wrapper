@@ -5,7 +5,7 @@
 
 type PaginatorConfig<T> = {
 	items: T[];
-	itemsPerPage: number;
+	itemsPerPage?: number;
 	take?: number;
 	skip?: number;
 };
@@ -36,7 +36,7 @@ export class Paginator<T> {
 		this.#skipItems(skip);
 		this.#takeItems(take);
 
-		this.itemsPerPage = Math.floor(itemsPerPage);
+		this.itemsPerPage = itemsPerPage ? Math.floor(itemsPerPage) : 20;
 	}
 
 	/**

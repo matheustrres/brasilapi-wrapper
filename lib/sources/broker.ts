@@ -27,9 +27,7 @@ export class BrasilAPIBroker extends Source implements IBroker {
 		return this.followUp(
 			new Paginator({
 				items: res,
-				itemsPerPage: params?.limit || 20,
-				skip: params?.skip,
-				take: params?.take,
+				...params,
 			}),
 		);
 	}

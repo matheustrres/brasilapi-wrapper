@@ -28,7 +28,7 @@ describe('BrasilAPI', () => {
 
 	it('should list all banks', async () => {
 		const res = await sut.banks.list({
-			limit: 10,
+			itemsPerPage: 10,
 			take: 5,
 		});
 
@@ -99,7 +99,7 @@ describe('BrasilAPI', () => {
 	it('should list all brokers', async () => {
 		const res = await sut.brokers.list({
 			take: 3,
-			limit: 5,
+			itemsPerPage: 5,
 		});
 
 		assert.ok(res);
@@ -303,7 +303,7 @@ describe('BrasilAPI', () => {
 
 	it('should list all cities', async () => {
 		const res = await sut.CPTEC.listCities({
-			limit: 4,
+			itemsPerPage: 4,
 			take: 3,
 		});
 

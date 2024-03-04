@@ -119,5 +119,6 @@ export type DDD = {
 export type ListParams = {
 	take?: number;
 	skip?: number;
-	limit?: number;
+	itemsPerPage?: number;
+	page?: number;
 };

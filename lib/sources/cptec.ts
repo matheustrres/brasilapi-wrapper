@@ -20,9 +20,7 @@ export class BrasilAPICPTEC extends Source implements ICPTEC {
 		return this.followUp(
 			new Paginator({
 				items: res,
-				itemsPerPage: params?.limit || 20,
-				skip: params?.skip,
-				take: params?.take,
+				...params,
 			}),
 		);
 	}
