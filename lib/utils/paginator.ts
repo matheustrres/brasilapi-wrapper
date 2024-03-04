@@ -104,16 +104,13 @@ export class Paginator<T> {
 	 *
 	 * @param {T[]} items - The items to be chunked
 	 * @param {Number} chunkSize - The amount of items per page
-	 * @returns {void}
+	 * @returns {T[][]}
 	 */
 	#chunkArr(items: T[], chunkSize: number): T[][] {
 		const pages: T[][] = [];
 
-		for (let i = 0; i < items.length; i += chunkSize) {
-			const chunk = items.slice(i, i + chunkSize);
-
-			pages.push(chunk);
-		}
+		for (let i = 0; i < items.length; i += chunkSize)
+			pages.push(items.slice(i, i + chunkSize));
 
 		return pages;
 	}
