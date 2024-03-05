@@ -7,6 +7,10 @@ import { Paginator } from '../utils/paginator';
 
 interface ICPTEC {
 	listCities(params?: ListParams): Promise<Result<Paginator<City>>>;
+	fetchCities(
+		cityName: string,
+		params?: ListParams,
+	): Promise<Result<Paginator<City>>>;
 }
 
 export class BrasilAPICPTEC extends Source implements ICPTEC {
@@ -15,6 +19,19 @@ export class BrasilAPICPTEC extends Source implements ICPTEC {
 	async listCities(params?: ListParams) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<City[]>>(
 			`${this.URL}/cidade`,
+		);
+
+		return this.followUp(
+			new Paginator({
+				items: res,
+				...params,
+			}),
+		);
+	}
+
+	async fetchCities(cityName: string, params?: ListParams) {
+		const res = await HttpsClient.GET<BrasilAPIResponse<City[]>>(
+			`${this.URL}/cidade/${cityName}`,
 		);
 
 		return this.followUp(
