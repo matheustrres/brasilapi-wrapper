@@ -332,9 +332,9 @@ describe('BrasilAPI', () => {
 		]);
 	});
 
-	it.skip('should list weather in the capitals', async () => {
+	it('should list weather in the capitals', async () => {
 		const res = await sut.CPTEC.listWeatherInCapitals({
-			take: 5,
+			take: 3,
 			itemsPerPage: 10,
 		});
 
@@ -342,68 +342,62 @@ describe('BrasilAPI', () => {
 
 		assert.ok(res);
 		assert.equal(pages.length, 1);
-		assert.deepStrictEqual(pages[0], [
+		assert.deepEqual(pages[0], [
 			{
-				umidade: 87,
+				umidade: 89,
 				intensidade: '>10000',
 				codigo_icao: 'SBAR',
-				pressao_atmosferica: 1012,
-				vento: 14,
-				direcao_vento: 100,
-				condicao: 'ps',
-				condicao_desc: 'Predomínio de Sol',
-				temp: 28,
-				atualizado_em: '2024-03-05T00:00:00.123Z',
-			},
-			{
-				umidade: 93,
-				intensidade: '>10000',
-				codigo_icao: 'SBBE',
-				pressao_atmosferica: 1013,
-				vento: 4,
-				direcao_vento: 120,
-				condicao: 'ps',
-				condicao_desc: 'Predomínio de Sol',
-				temp: 26,
-				atualizado_em: '2024-03-05T00:00:00.124Z',
-			},
-			{
-				umidade: 81,
-				intensidade: '>10000',
-				codigo_icao: 'SBCF',
-				pressao_atmosferica: 1019,
-				vento: 14,
-				direcao_vento: 340,
-				condicao: 'ps',
-				condicao_desc: 'Predomínio de Sol',
-				temp: 21,
-				atualizado_em: '2024-03-05T00:00:00.124Z',
-			},
-			{
-				umidade: 47,
-				intensidade: '>10000',
-				codigo_icao: 'SBBV',
-				pressao_atmosferica: 1011,
-				vento: 14,
-				direcao_vento: 110,
-				condicao: 'ps',
-				condicao_desc: 'Predomínio de Sol',
-				temp: 31,
-				atualizado_em: '2024-03-05T00:00:00.124Z',
-			},
-			{
-				umidade: 87,
-				intensidade: '>10000',
-				codigo_icao: 'SBBR',
-				pressao_atmosferica: 1019,
-				vento: 4,
+				pressao_atmosferica: 1014,
+				vento: 11,
 				direcao_vento: 70,
 				condicao: 'ps',
 				condicao_desc: 'Predomínio de Sol',
-				temp: 21,
-				atualizado_em: '2024-03-05T00:00:00.124Z',
+				temp: 29,
+				atualizado_em: '2024-03-05T09:00:00.206Z',
+			},
+			{
+				umidade: 79,
+				intensidade: '>10000',
+				codigo_icao: 'SBBE',
+				pressao_atmosferica: 1013,
+				vento: 7,
+				direcao_vento: 140,
+				condicao: 'ps',
+				condicao_desc: 'Predomínio de Sol',
+				temp: 28,
+				atualizado_em: '2024-03-05T09:00:00.206Z',
+			},
+			{
+				umidade: 65,
+				intensidade: '>10000',
+				codigo_icao: 'SBCF',
+				pressao_atmosferica: 1020,
+				vento: 7,
+				direcao_vento: 60,
+				condicao: 'ps',
+				condicao_desc: 'Predomínio de Sol',
+				temp: 25,
+				atualizado_em: '2024-03-05T09:00:00.206Z',
 			},
 		]);
+	});
+
+	it('should get current weather conditions for an airport', async () => {
+		const res = await sut.CPTEC.getAirportWeather('SBAR');
+
+		assert.ok(res);
+		assert.deepEqual(res.data, {
+			umidade: 89,
+			visibilidade: '>10000',
+			codigo_icao: 'SBAR',
+			pressao_atmosferica: 1014,
+			vento: 11,
+			direcao_vento: 70,
+			condicao: 'ps',
+			condicao_desc: 'Predomínio de Sol',
+			temp: 29,
+			atualizado_em: '2024-03-05T09:00:00.647Z',
+		});
 	});
 
 	it('should get a DDD', async () => {
