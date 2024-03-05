@@ -169,6 +169,11 @@ export type DDD = {
 	cities: string[];
 };
 
+export type Municipality = {
+	nome: string;
+	codigo_ibge: string;
+};
+
 export type ListParams = {
 	take?: number;
 	skip?: number;

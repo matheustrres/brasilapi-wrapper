@@ -4,6 +4,7 @@ import { BrasilAPICEP } from './sources/cep';
 import { BrasilAPICNPJ } from './sources/cnpj';
 import { BrasilAPICPTEC } from './sources/cptec';
 import { BrasilAPIDDD } from './sources/ddd';
+import { BrasilAPIIBGE } from './sources/ibge';
 
 /**
  * Represents the main BrasilAPI client wrapper
@@ -32,5 +33,9 @@ export class BrasilAPI {
 
 	get DDDs() {
 		return new BrasilAPIDDD();
+	}
+
+	get IBGE() {
+		return new BrasilAPIIBGE();
 	}
 }
