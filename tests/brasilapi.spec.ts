@@ -317,6 +317,21 @@ describe('BrasilAPI', () => {
 		]);
 	});
 
+	it('should fetch related cities', async () => {
+		const res = await sut.CPTEC.fetchCities('São Benedito', {
+			itemsPerPage: 3,
+		});
+
+		const page = res.data!.loadPage(1);
+
+		assert.ok(res);
+		assert.deepStrictEqual(page, [
+			{ nome: 'São Benedito', id: 4750, estado: 'CE' },
+			{ nome: 'São Benedito do Rio Preto', id: 4751, estado: 'MA' },
+			{ nome: 'São Benedito do Sul', id: 4752, estado: 'PE' },
+		]);
+	});
+
 	it('should fetch a DDD', async () => {
 		const res = await sut.DDDs.fetch('21');
 
