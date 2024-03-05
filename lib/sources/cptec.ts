@@ -1,7 +1,12 @@
 import { Source } from './source';
 
 import { HttpsClient } from '../clients/http-client';
-import { type Weather, type City, type ListParams } from '../typings';
+import {
+	type Weather,
+	type City,
+	type ListParams,
+	type WeatherForecast,
+} from '../typings';
 import { type BrasilAPIResponse, type Result } from '../typings/result';
 import { Paginator } from '../utils/paginator';
 
@@ -15,6 +20,7 @@ interface ICPTEC {
 		params?: ListParams,
 	): Promise<Result<Paginator<City>>>;
 	getAirportWeather(icaoCode: string): Promise<Result<Weather>>;
+	getCityWeatherForecast(cityCode: number): Promise<Result<WeatherForecast>>;
 }
 
 /**
@@ -104,6 +110,14 @@ export class BrasilAPICPTEC extends Source implements ICPTEC {
 	async getAirportWeather(icaoCode: string) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<Weather>>(
 			`${this.URL}/clima/aeroporto/${icaoCode}`,
+		);
+
+		return this.followUp(res);
+	}
+
+	async getCityWeatherForecast(cityCode: number) {
+		const res = await HttpsClient.GET<BrasilAPIResponse<WeatherForecast>>(
+			`${this.URL}/clima/previsao/${cityCode}`,
 		);
 
 		return this.followUp(res);

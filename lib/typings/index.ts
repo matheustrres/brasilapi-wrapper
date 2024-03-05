@@ -125,6 +125,22 @@ export type Weather = {
 	atualizado_em: string;
 };
 
+export type WeatherForecast = {
+	cidade: string;
+	estado: string;
+	atualizado_em: string;
+	clima: Climate[];
+};
+
+export type Climate = {
+	data: string;
+	condicao: string;
+	min: number;
+	max: number;
+	indice_uv: number;
+	condicao_desc: string;
+};
+
 export type DDD = {
 	state: string;
 	cities: string[];
