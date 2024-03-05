@@ -121,6 +121,7 @@ export type Weather = {
 	condicao: string;
 	condicao_desc: string;
 	temp: number;
+	visibilidade: string | null;
 	atualizado_em: string;
 };
 

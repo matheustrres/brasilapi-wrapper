@@ -14,6 +14,7 @@ interface ICPTEC {
 		cityName: string,
 		params?: ListParams,
 	): Promise<Result<Paginator<City>>>;
+	getAirportWeather(icaoCode: string): Promise<Result<Weather>>;
 }
 
 /**
@@ -92,5 +93,19 @@ export class BrasilAPICPTEC extends Source implements ICPTEC {
 				...params,
 			}),
 		);
+	}
+
+	/**
+	 * Gets current weather conditions at an airport
+	 *
+	 * @param {String} icaoCode - The airport ICAO code
+	 * @returns {Promise<Result<Weather>>}
+	 */
+	async getAirportWeather(icaoCode: string) {
+		const res = await HttpsClient.GET<BrasilAPIResponse<Weather>>(
+			`${this.URL}/clima/aeroporto/${icaoCode}`,
+		);
+
+		return this.followUp(res);
 	}
 }
