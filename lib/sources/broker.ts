@@ -10,9 +10,18 @@ interface IBroker {
 	list(params?: ListParams): Promise<Result<Paginator<Broker>>>;
 }
 
+/**
+ * Represents the source from BrasilAPI Brokers' endpoint responses
+ */
 export class BrasilAPIBroker extends Source implements IBroker {
 	protected readonly URL = 'https://brasilapi.com.br/api/cvm/corretoras/v1';
 
+	/**
+	 * Fetches information from a broker in the CVM archives
+	 *
+	 * @param {String} cnpj - The broker's CNPJ
+	 * @returns {Promise<Result<Broker>>}
+	 */
 	async fetch(cnpj: string) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<Broker>>(
 			`${this.URL}/${cnpj}`,
@@ -21,7 +30,17 @@ export class BrasilAPIBroker extends Source implements IBroker {
 		return this.followUp<Broker>(res);
 	}
 
-	async list(params?: ListParams | undefined) {
+	/**
+	 * Lists all the brokers in the CVM archives
+	 *
+	 * @param {ListParams} [params] - The listing parameters
+	 * @param {Number} [params.itemsPerPage] - The limit of items per page
+	 * @param {Number} [params.page] - The page number to start with
+	 * @param {Number} [params.skip] - The amount of items to skip
+	 * @param {Number} [params.take] - The amount of items to take
+	 * @returns {Promise<Result<Paginator<Broker>>>}
+	 */
+	async list(params?: ListParams) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<Broker[]>>(this.URL);
 
 		return this.followUp(
