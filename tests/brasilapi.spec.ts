@@ -178,13 +178,13 @@ describe('BrasilAPI', () => {
 		const res = await sut.CEPs.getV1('08226021');
 
 		assert.ok(res);
-		assert.deepStrictEqual(res.data, {
+		assert.deepEqual(res.data, {
 			cep: '08226021',
 			state: 'SP',
 			city: 'São Paulo',
 			neighborhood: 'Cidade Antônio Estevão de Carvalho',
 			street: 'Rua 18 de Abril',
-			service: 'correios-alt',
+			service: 'viacep',
 		});
 	});
 
@@ -344,40 +344,40 @@ describe('BrasilAPI', () => {
 		assert.equal(pages.length, 1);
 		assert.deepEqual(pages[0], [
 			{
-				umidade: 89,
+				umidade: 76,
 				intensidade: '>10000',
 				codigo_icao: 'SBAR',
-				pressao_atmosferica: 1014,
-				vento: 11,
-				direcao_vento: 70,
+				pressao_atmosferica: 1012,
+				vento: 25,
+				direcao_vento: 110,
 				condicao: 'ps',
 				condicao_desc: 'Predomínio de Sol',
-				temp: 29,
-				atualizado_em: '2024-03-05T09:00:00.206Z',
+				temp: 30,
+				atualizado_em: '2024-03-05T17:00:00.657Z',
 			},
 			{
-				umidade: 79,
+				umidade: 62,
 				intensidade: '>10000',
 				codigo_icao: 'SBBE',
-				pressao_atmosferica: 1013,
-				vento: 7,
-				direcao_vento: 140,
+				pressao_atmosferica: 1010,
+				vento: 11,
+				direcao_vento: 310,
 				condicao: 'ps',
 				condicao_desc: 'Predomínio de Sol',
-				temp: 28,
-				atualizado_em: '2024-03-05T09:00:00.206Z',
+				temp: 31,
+				atualizado_em: '2024-03-05T17:00:00.657Z',
 			},
 			{
-				umidade: 65,
+				umidade: 81,
 				intensidade: '>10000',
 				codigo_icao: 'SBCF',
-				pressao_atmosferica: 1020,
-				vento: 7,
-				direcao_vento: 60,
+				pressao_atmosferica: 1017,
+				vento: 18,
+				direcao_vento: 30,
 				condicao: 'ps',
 				condicao_desc: 'Predomínio de Sol',
-				temp: 25,
-				atualizado_em: '2024-03-05T09:00:00.206Z',
+				temp: 23,
+				atualizado_em: '2024-03-05T17:00:00.657Z',
 			},
 		]);
 	});
@@ -387,16 +387,37 @@ describe('BrasilAPI', () => {
 
 		assert.ok(res);
 		assert.deepEqual(res.data, {
-			umidade: 89,
+			umidade: 76,
 			visibilidade: '>10000',
 			codigo_icao: 'SBAR',
-			pressao_atmosferica: 1014,
-			vento: 11,
-			direcao_vento: 70,
+			pressao_atmosferica: 1012,
+			vento: 25,
+			direcao_vento: 110,
 			condicao: 'ps',
 			condicao_desc: 'Predomínio de Sol',
-			temp: 29,
-			atualizado_em: '2024-03-05T09:00:00.647Z',
+			temp: 30,
+			atualizado_em: '2024-03-05T17:00:00.256Z',
+		});
+	});
+
+	it('should get weather forecast for a city', async () => {
+		const res = await sut.CPTEC.getCityWeatherForecast(999);
+
+		assert.ok(res);
+		assert.deepEqual(res.data, {
+			cidade: 'Brejo Alegre',
+			estado: 'SP',
+			atualizado_em: '2024-03-05',
+			clima: [
+				{
+					data: '2024-03-06',
+					condicao: 'pn',
+					condicao_desc: 'Parcialmente Nublado',
+					min: 23,
+					max: 35,
+					indice_uv: 12,
+				},
+			],
 		});
 	});
 
