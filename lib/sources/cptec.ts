@@ -1,12 +1,15 @@
 import { Source } from './source';
 
 import { HttpsClient } from '../clients/http-client';
-import { type City, type ListParams } from '../typings';
+import { type Weather, type City, type ListParams } from '../typings';
 import { type BrasilAPIResponse, type Result } from '../typings/result';
 import { Paginator } from '../utils/paginator';
 
 interface ICPTEC {
 	listCities(params?: ListParams): Promise<Result<Paginator<City>>>;
+	listWeatherInCapitals(
+		params?: ListParams,
+	): Promise<Result<Paginator<Weather>>>;
 	fetchCity(
 		cityName: string,
 		params?: ListParams,
@@ -19,6 +22,21 @@ export class BrasilAPICPTEC extends Source implements ICPTEC {
 	async listCities(params?: ListParams) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<City[]>>(
 			`${this.URL}/cidade`,
+		);
+
+		return this.followUp(
+			new Paginator({
+				items: res,
+				...params,
+			}),
+		);
+	}
+
+	async listWeatherInCapitals(
+		params?: ListParams,
+	): Promise<Result<Paginator<Weather>>> {
+		const res = await HttpsClient.GET<BrasilAPIResponse<Weather[]>>(
+			`${this.URL}/clima/capital`,
 		);
 
 		return this.followUp(

@@ -111,6 +111,19 @@ export type City = {
 	id: string;
 };
 
+export type Weather = {
+	umidade: number;
+	intensidade: string;
+	codigo_icao: string;
+	pressao_atmosferica: number;
+	vento: number;
+	direcao_vento: number;
+	condicao: string;
+	condicao_desc: string;
+	temp: number;
+	atualizado_em: string;
+};
+
 export type DDD = {
 	state: string;
 	cities: string[];
