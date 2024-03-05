@@ -5,11 +5,32 @@ import { BrasilAPICNPJ } from './sources/cnpj';
 import { BrasilAPICPTEC } from './sources/cptec';
 import { BrasilAPIDDD } from './sources/ddd';
 
+/**
+ * Represents the main BrasilAPI client wrapper
+ * 
+ */
 export class BrasilAPI {
-	readonly banks = new BrasilAPIBank();
-	readonly brokers = new BrasilAPIBroker();
-	readonly CEPs = new BrasilAPICEP();
-	readonly CNPJs = new BrasilAPICNPJ();
-	readonly CPTEC = new BrasilAPICPTEC();
-	readonly DDDs = new BrasilAPIDDD();
+	get banks() {
+		return new BrasilAPIBank();
+	}
+
+	get brokers() {
+		return new BrasilAPIBroker();
+	}
+
+	get CEPs() {
+		return new BrasilAPICEP();
+	}
+
+	get CNPJs() {
+		return new BrasilAPICNPJ();
+	}
+
+	get CPTEC() {
+		return new BrasilAPICPTEC();
+	}
+
+	get DDDs() {
+		return new BrasilAPIDDD();
+	}
 }
