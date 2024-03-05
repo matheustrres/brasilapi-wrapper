@@ -141,6 +141,29 @@ export type Climate = {
 	condicao_desc: string;
 };
 
+export type OceanForecast = {
+	cidade: string;
+	estado: string;
+	atualizado_em: string;
+	ondas: Wave[];
+};
+
+export type Wave = {
+	data: string;
+	dados_ondas: WaveData[];
+};
+
+export type WaveData = {
+	vento: number;
+	direcao_vento: string;
+	direcao_vento_desc: string;
+	altura_onda: number;
+	direcao_onda: string;
+	direcao_onda_desc: string;
+	agitacao: string;
+	hora: string;
+};
+
 export type DDD = {
 	state: string;
 	cities: string[];

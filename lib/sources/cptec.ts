@@ -6,6 +6,7 @@ import {
 	type City,
 	type ListParams,
 	type WeatherForecast,
+	type OceanForecast,
 } from '../typings';
 import { type BrasilAPIResponse, type Result } from '../typings/result';
 import { Paginator } from '../utils/paginator';
@@ -15,12 +16,13 @@ interface ICPTEC {
 	listWeatherInCapitals(
 		params?: ListParams,
 	): Promise<Result<Paginator<Weather>>>;
+	getAirportWeather(icaoCode: string): Promise<Result<Weather>>;
 	getCity(
 		cityName: string,
 		params?: ListParams,
 	): Promise<Result<Paginator<City>>>;
-	getAirportWeather(icaoCode: string): Promise<Result<Weather>>;
 	getCityWeatherForecast(cityCode: number): Promise<Result<WeatherForecast>>;
+	getCityOceanForecast(cityCode: number): Promise<Result<OceanForecast>>;
 }
 
 /**
@@ -115,9 +117,29 @@ export class BrasilAPICPTEC extends Source implements ICPTEC {
 		return this.followUp(res);
 	}
 
+	/**
+	 * Gets the weather forecast for 1 day in the city entered
+	 *
+	 * @param {Number} cityCode - The city code
+	 * @returns {Promise<Result<WeatherForecast>>}
+	 */
 	async getCityWeatherForecast(cityCode: number) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<WeatherForecast>>(
 			`${this.URL}/clima/previsao/${cityCode}`,
+		);
+
+		return this.followUp(res);
+	}
+
+	/**
+	 * Gets the ocean forecast for 1 day in the city entered
+	 *
+	 * @param {Number} cityCode - The city code
+	 * @returns {Promise<Result<OceanForecast>>}
+	 */
+	async getCityOceanForecast(cityCode: number) {
+		const res = await HttpsClient.GET<BrasilAPIResponse<OceanForecast>>(
+			`${this.URL}/ondas/${cityCode}`,
 		);
 
 		return this.followUp(res);
