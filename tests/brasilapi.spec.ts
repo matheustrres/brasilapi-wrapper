@@ -421,6 +421,104 @@ describe('BrasilAPI', () => {
 		});
 	});
 
+	it('should get ocean forecast for a city', async () => {
+		const res = await sut.CPTEC.getCityOceanForecast(241);
+
+		assert.ok(res);
+		assert.deepEqual(res.data, {
+			cidade: 'Rio de Janeiro',
+			estado: 'RJ',
+			atualizado_em: '2024-03-05',
+			ondas: [
+				{
+					data: '2024-03-05',
+					dados_ondas: [
+						{
+							hora: '00:00Z',
+							vento: 7.2,
+							direcao_vento: 'ENE',
+							direcao_vento_desc: 'Lés-nordeste',
+							altura_onda: 1.1,
+							direcao_onda: 'SE',
+							direcao_onda_desc: 'Sudeste',
+							agitation: 'Fraco',
+						},
+						{
+							hora: '03:00Z',
+							vento: 7.4,
+							direcao_vento: 'ENE',
+							direcao_vento_desc: 'Lés-nordeste',
+							altura_onda: 1.1,
+							direcao_onda: 'SE',
+							direcao_onda_desc: 'Sudeste',
+							agitation: 'Fraco',
+						},
+						{
+							hora: '06:00Z',
+							vento: 6.1,
+							direcao_vento: 'NE',
+							direcao_vento_desc: 'Nordeste',
+							altura_onda: 1.1,
+							direcao_onda: 'SE',
+							direcao_onda_desc: 'Sudeste',
+							agitation: 'Fraco',
+						},
+						{
+							hora: '09:00Z',
+							vento: 4.6,
+							direcao_vento: 'NE',
+							direcao_vento_desc: 'Nordeste',
+							altura_onda: 1,
+							direcao_onda: 'SE',
+							direcao_onda_desc: 'Sudeste',
+							agitation: 'Fraco',
+						},
+						{
+							hora: '12:00Z',
+							vento: 3.3,
+							direcao_vento: 'NE',
+							direcao_vento_desc: 'Nordeste',
+							altura_onda: 1,
+							direcao_onda: 'SE',
+							direcao_onda_desc: 'Sudeste',
+							agitation: 'Fraco',
+						},
+						{
+							hora: '15:00Z',
+							vento: 3.8,
+							direcao_vento: 'E',
+							direcao_vento_desc: 'Leste',
+							altura_onda: 1.1,
+							direcao_onda: 'ESE',
+							direcao_onda_desc: 'Lés-sudeste',
+							agitation: 'Fraco',
+						},
+						{
+							hora: '18:00Z',
+							vento: 4.1,
+							direcao_vento: 'ESE',
+							direcao_vento_desc: 'Lés-sudeste',
+							altura_onda: 1.3,
+							direcao_onda: 'ESE',
+							direcao_onda_desc: 'Lés-sudeste',
+							agitation: 'Fraco',
+						},
+						{
+							hora: '21:00Z',
+							vento: 2.9,
+							direcao_vento: 'ESE',
+							direcao_vento_desc: 'Lés-sudeste',
+							altura_onda: 1.6,
+							direcao_onda: 'E',
+							direcao_onda_desc: 'Leste',
+							agitation: 'Fraco',
+						},
+					],
+				},
+			],
+		});
+	});
+
 	it('should get a DDD', async () => {
 		const res = await sut.DDDs.get('21');
 
