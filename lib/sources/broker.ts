@@ -6,7 +6,7 @@ import { type BrasilAPIResponse, type Result } from '../typings/result';
 import { Paginator } from '../utils/paginator';
 
 interface IBroker {
-	fetch(cnpj: string): Promise<Result<Broker>>;
+	get(cnpj: string): Promise<Result<Broker>>;
 	list(params?: ListParams): Promise<Result<Paginator<Broker>>>;
 }
 
@@ -17,12 +17,12 @@ export class BrasilAPIBroker extends Source implements IBroker {
 	protected readonly URL = 'https://brasilapi.com.br/api/cvm/corretoras/v1';
 
 	/**
-	 * Fetches information from a broker in the CVM archives
+	 * Gets information from a broker in the CVM archives
 	 *
 	 * @param {String} cnpj - The broker's CNPJ
 	 * @returns {Promise<Result<Broker>>}
 	 */
-	async fetch(cnpj: string) {
+	async get(cnpj: string) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<Broker>>(
 			`${this.URL}/${cnpj}`,
 		);

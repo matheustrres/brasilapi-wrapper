@@ -6,7 +6,7 @@ import { type BrasilAPIResponse, type Result } from '../typings/result';
 import { Paginator } from '../utils/paginator';
 
 interface IBank {
-	fetch(code: string): Promise<Result<Bank>>;
+	get(code: string): Promise<Result<Bank>>;
 	list(params?: ListParams): Promise<Result<Paginator<Bank>>>;
 }
 
@@ -17,12 +17,12 @@ export class BrasilAPIBank extends Source implements IBank {
 	protected readonly URL = 'https://brasilapi.com.br/api/banks/v1';
 
 	/**
-	 * Fetches information from a bank using a code
+	 * Gets information from a bank using a code
 	 *
 	 * @param {String} code - The bank code
 	 * @returns {Promise<Result<Bank>>}
 	 */
-	async fetch(code: string) {
+	async get(code: string) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<Bank>>(
 			`${this.URL}/${code}`,
 		);

@@ -10,7 +10,7 @@ interface ICPTEC {
 	listWeatherInCapitals(
 		params?: ListParams,
 	): Promise<Result<Paginator<Weather>>>;
-	fetchCity(
+	getCity(
 		cityName: string,
 		params?: ListParams,
 	): Promise<Result<Paginator<City>>>;
@@ -81,7 +81,7 @@ export class BrasilAPICPTEC extends Source implements ICPTEC {
 	 * @param {Number} [params.take] - The amount of items to take
 	 * @returns {Promise<Result<Paginator<City>>>}
 	 */
-	async fetchCity(cityName: string, params?: ListParams) {
+	async getCity(cityName: string, params?: ListParams) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<City[]>>(
 			`${this.URL}/cidade/${cityName}`,
 		);

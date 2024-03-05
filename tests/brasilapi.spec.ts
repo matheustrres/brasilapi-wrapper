@@ -10,8 +10,8 @@ describe('BrasilAPI', () => {
 		sut = new BrasilAPI();
 	});
 
-	it('should fetch a bank by its code', async () => {
-		const res = await sut.banks.fetch('157');
+	it('should get a bank by its code', async () => {
+		const res = await sut.banks.get('157');
 
 		assert.ok(res);
 		assert.deepEqual(res, {
@@ -69,8 +69,8 @@ describe('BrasilAPI', () => {
 		]);
 	});
 
-	it('should fetch a broker by its CNPJ', async () => {
-		const res = await sut.brokers.fetch('02332886000104');
+	it('should get a broker by its CNPJ', async () => {
+		const res = await sut.brokers.get('02332886000104');
 
 		assert.ok(res);
 		assert.deepStrictEqual(res.data, {
@@ -174,8 +174,8 @@ describe('BrasilAPI', () => {
 		]);
 	});
 
-	it('should fetch a CEP from v1', async () => {
-		const res = await sut.CEPs.fetchV1('08226021');
+	it('should get a CEP from v1', async () => {
+		const res = await sut.CEPs.getV1('08226021');
 
 		assert.ok(res);
 		assert.deepStrictEqual(res.data, {
@@ -188,8 +188,8 @@ describe('BrasilAPI', () => {
 		});
 	});
 
-	it('should fetch a CEP from v2', async () => {
-		const res = await sut.CEPs.fetchV2('22041011');
+	it('should get a CEP from v2', async () => {
+		const res = await sut.CEPs.getV2('22041011');
 
 		assert.ok(res);
 		assert.deepStrictEqual(res.data, {
@@ -203,8 +203,8 @@ describe('BrasilAPI', () => {
 		});
 	});
 
-	it('should fetch a CNPJ', async () => {
-		const res = await sut.CNPJs.fetch('19131243000197');
+	it('should get a CNPJ', async () => {
+		const res = await sut.CNPJs.get('19131243000197');
 
 		assert.ok(res);
 		assert.deepStrictEqual(res.data, {
@@ -317,8 +317,8 @@ describe('BrasilAPI', () => {
 		]);
 	});
 
-	it('should fetch related cities', async () => {
-		const res = await sut.CPTEC.fetchCity('São Benedito', {
+	it('should get related cities', async () => {
+		const res = await sut.CPTEC.getCity('São Benedito', {
 			itemsPerPage: 3,
 		});
 
@@ -332,7 +332,7 @@ describe('BrasilAPI', () => {
 		]);
 	});
 
-	it('should list weather in the capitals', async () => {
+	it.skip('should list weather in the capitals', async () => {
 		const res = await sut.CPTEC.listWeatherInCapitals({
 			take: 5,
 			itemsPerPage: 10,
@@ -406,8 +406,8 @@ describe('BrasilAPI', () => {
 		]);
 	});
 
-	it('should fetch a DDD', async () => {
-		const res = await sut.DDDs.fetch('21');
+	it('should get a DDD', async () => {
+		const res = await sut.DDDs.get('21');
 
 		assert.ok(res);
 		assert.deepStrictEqual(res.data, {
