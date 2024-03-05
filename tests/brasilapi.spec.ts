@@ -318,7 +318,7 @@ describe('BrasilAPI', () => {
 	});
 
 	it('should fetch related cities', async () => {
-		const res = await sut.CPTEC.fetchCities('São Benedito', {
+		const res = await sut.CPTEC.fetchCity('São Benedito', {
 			itemsPerPage: 3,
 		});
 
