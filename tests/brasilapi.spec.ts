@@ -519,6 +519,23 @@ describe('BrasilAPI', () => {
 		});
 	});
 
+	it('should list the municipalities of the federative unit', async () => {
+		const res = await sut.IBGE.listFederativeUnitMinicipalities('RJ', ['gov'], {
+			take: 5,
+		});
+
+		const page = res.data!.loadPage(1);
+
+		assert.ok(res);
+		assert.deepEqual(page, [
+			{ nome: 'ANGRA DOS REIS', codigo_ibge: '3300100' },
+			{ nome: 'APERIBÉ', codigo_ibge: '3300159' },
+			{ nome: 'ARARUAMA', codigo_ibge: '3300209' },
+			{ nome: 'AREAL', codigo_ibge: '3300225' },
+			{ nome: 'ARMAÇÃO DOS BÚZIOS', codigo_ibge: '3300233' },
+		]);
+	});
+
 	it('should get a DDD', async () => {
 		const res = await sut.DDDs.get('21');
 
