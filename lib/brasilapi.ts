@@ -7,7 +7,7 @@ import { BrasilAPIDDD } from './sources/ddd';
 
 /**
  * Represents the main BrasilAPI client wrapper
- * 
+ *
  */
 export class BrasilAPI {
 	get banks() {
