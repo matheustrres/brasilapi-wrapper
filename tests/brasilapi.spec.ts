@@ -332,6 +332,80 @@ describe('BrasilAPI', () => {
 		]);
 	});
 
+	it('should list weather in the capitals', async () => {
+		const res = await sut.CPTEC.listWeatherInCapitals({
+			take: 5,
+			itemsPerPage: 10,
+		});
+
+		const pages = res.data!.loadPages();
+
+		assert.ok(res);
+		assert.equal(pages.length, 1);
+		assert.deepStrictEqual(pages[0], [
+			{
+				umidade: 87,
+				intensidade: '>10000',
+				codigo_icao: 'SBAR',
+				pressao_atmosferica: 1012,
+				vento: 14,
+				direcao_vento: 100,
+				condicao: 'ps',
+				condicao_desc: 'Predomínio de Sol',
+				temp: 28,
+				atualizado_em: '2024-03-05T00:00:00.123Z',
+			},
+			{
+				umidade: 93,
+				intensidade: '>10000',
+				codigo_icao: 'SBBE',
+				pressao_atmosferica: 1013,
+				vento: 4,
+				direcao_vento: 120,
+				condicao: 'ps',
+				condicao_desc: 'Predomínio de Sol',
+				temp: 26,
+				atualizado_em: '2024-03-05T00:00:00.124Z',
+			},
+			{
+				umidade: 81,
+				intensidade: '>10000',
+				codigo_icao: 'SBCF',
+				pressao_atmosferica: 1019,
+				vento: 14,
+				direcao_vento: 340,
+				condicao: 'ps',
+				condicao_desc: 'Predomínio de Sol',
+				temp: 21,
+				atualizado_em: '2024-03-05T00:00:00.124Z',
+			},
+			{
+				umidade: 47,
+				intensidade: '>10000',
+				codigo_icao: 'SBBV',
+				pressao_atmosferica: 1011,
+				vento: 14,
+				direcao_vento: 110,
+				condicao: 'ps',
+				condicao_desc: 'Predomínio de Sol',
+				temp: 31,
+				atualizado_em: '2024-03-05T00:00:00.124Z',
+			},
+			{
+				umidade: 87,
+				intensidade: '>10000',
+				codigo_icao: 'SBBR',
+				pressao_atmosferica: 1019,
+				vento: 4,
+				direcao_vento: 70,
+				condicao: 'ps',
+				condicao_desc: 'Predomínio de Sol',
+				temp: 21,
+				atualizado_em: '2024-03-05T00:00:00.124Z',
+			},
+		]);
+	});
+
 	it('should fetch a DDD', async () => {
 		const res = await sut.DDDs.fetch('21');
 
