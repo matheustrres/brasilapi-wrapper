@@ -14,12 +14,12 @@ export type BrasilAPIResponse<T> =
 			}>;
 	  });
 
-type Success<T> = {
+export type Success<T> = {
 	data: T;
 	status?: never;
 };
 
-type Failure = {
+export type Failure = {
 	data?: never;
 	status: {
 		message: string;
