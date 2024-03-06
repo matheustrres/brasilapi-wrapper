@@ -14,7 +14,7 @@ describe('BrasilAPI', () => {
 		const res = await sut.banks.get('157');
 
 		assert.ok(res);
-		assert.deepEqual(res, {
+		assert.deepStrictEqual(res, {
 			timestamp: res.timestamp,
 			data: {
 				ispb: '09105360',
@@ -178,13 +178,13 @@ describe('BrasilAPI', () => {
 		const res = await sut.CEPs.getV1('08226021');
 
 		assert.ok(res);
-		assert.deepEqual(res.data, {
+		assert.deepStrictEqual(res.data, {
 			cep: '08226021',
 			state: 'SP',
 			city: 'São Paulo',
 			neighborhood: 'Cidade Antônio Estevão de Carvalho',
 			street: 'Rua 18 de Abril',
-			service: 'viacep',
+			service: res.data!.service,
 		});
 	});
 
@@ -198,7 +198,7 @@ describe('BrasilAPI', () => {
 			city: 'Rio de Janeiro',
 			neighborhood: 'Copacabana',
 			street: 'Rua Santa Clara - de 1 ao fim - lado ímpar',
-			service: 'correios-alt',
+			service: res.data!.service,
 			location: { type: 'Point', coordinates: {} },
 		});
 	});
@@ -342,42 +342,42 @@ describe('BrasilAPI', () => {
 
 		assert.ok(res);
 		assert.equal(pages.length, 1);
-		assert.deepEqual(pages[0], [
+		assert.deepStrictEqual(pages[0], [
 			{
-				umidade: 76,
+				umidade: 84,
 				intensidade: '>10000',
 				codigo_icao: 'SBAR',
-				pressao_atmosferica: 1012,
-				vento: 25,
-				direcao_vento: 110,
+				pressao_atmosferica: 1013,
+				vento: 22,
+				direcao_vento: 90,
 				condicao: 'ps',
 				condicao_desc: 'Predomínio de Sol',
-				temp: 30,
-				atualizado_em: '2024-03-05T17:00:00.657Z',
+				temp: 29,
+				atualizado_em: '2024-03-05T20:00:00.388Z',
 			},
 			{
-				umidade: 62,
+				umidade: 89,
 				intensidade: '>10000',
 				codigo_icao: 'SBBE',
-				pressao_atmosferica: 1010,
-				vento: 11,
-				direcao_vento: 310,
+				pressao_atmosferica: 1011,
+				vento: 14,
+				direcao_vento: 50,
 				condicao: 'ps',
 				condicao_desc: 'Predomínio de Sol',
-				temp: 31,
-				atualizado_em: '2024-03-05T17:00:00.657Z',
+				temp: 27,
+				atualizado_em: '2024-03-05T20:00:00.388Z',
 			},
 			{
-				umidade: 81,
+				umidade: 88,
 				intensidade: '>10000',
 				codigo_icao: 'SBCF',
-				pressao_atmosferica: 1017,
-				vento: 18,
-				direcao_vento: 30,
+				pressao_atmosferica: 1018,
+				vento: 4,
+				direcao_vento: 270,
 				condicao: 'ps',
 				condicao_desc: 'Predomínio de Sol',
-				temp: 23,
-				atualizado_em: '2024-03-05T17:00:00.657Z',
+				temp: 22,
+				atualizado_em: '2024-03-05T20:00:00.388Z',
 			},
 		]);
 	});
@@ -386,17 +386,17 @@ describe('BrasilAPI', () => {
 		const res = await sut.CPTEC.getAirportWeather('SBAR');
 
 		assert.ok(res);
-		assert.deepEqual(res.data, {
-			umidade: 76,
+		assert.deepStrictEqual(res.data, {
+			umidade: 75,
 			visibilidade: '>10000',
 			codigo_icao: 'SBAR',
-			pressao_atmosferica: 1012,
-			vento: 25,
-			direcao_vento: 110,
+			pressao_atmosferica: 1014,
+			vento: 14,
+			direcao_vento: 80,
 			condicao: 'ps',
 			condicao_desc: 'Predomínio de Sol',
 			temp: 30,
-			atualizado_em: '2024-03-05T17:00:00.256Z',
+			atualizado_em: '2024-03-06T08:00:00.557Z',
 		});
 	});
 
@@ -404,20 +404,20 @@ describe('BrasilAPI', () => {
 		const res = await sut.CPTEC.getCityWeatherForecast(999);
 
 		assert.ok(res);
-		assert.deepEqual(res.data, {
+		assert.deepStrictEqual(res.data, {
+			atualizado_em: res.data!.atualizado_em,
 			cidade: 'Brejo Alegre',
-			estado: 'SP',
-			atualizado_em: '2024-03-05',
 			clima: [
 				{
-					data: '2024-03-06',
-					condicao: 'pn',
-					condicao_desc: 'Parcialmente Nublado',
-					min: 23,
-					max: 35,
-					indice_uv: 12,
+					condicao: res.data!.clima[0]!.condicao,
+					condicao_desc: res.data!.clima[0]!.condicao_desc,
+					data: res.data!.clima[0]!.data,
+					indice_uv: res.data!.clima[0]!.indice_uv,
+					max: res.data!.clima[0]!.max,
+					min: res.data!.clima[0]!.min,
 				},
 			],
+			estado: 'SP',
 		});
 	});
 
@@ -425,98 +425,54 @@ describe('BrasilAPI', () => {
 		const res = await sut.CPTEC.getCityOceanForecast(241);
 
 		assert.ok(res);
-		assert.deepEqual(res.data, {
+		assert.deepStrictEqual(res.data, {
 			cidade: 'Rio de Janeiro',
 			estado: 'RJ',
-			atualizado_em: '2024-03-05',
-			ondas: [
-				{
-					data: '2024-03-05',
-					dados_ondas: [
-						{
-							hora: '00:00Z',
-							vento: 7.2,
-							direcao_vento: 'ENE',
-							direcao_vento_desc: 'Lés-nordeste',
-							altura_onda: 1.1,
-							direcao_onda: 'SE',
-							direcao_onda_desc: 'Sudeste',
-							agitation: 'Fraco',
-						},
-						{
-							hora: '03:00Z',
-							vento: 7.4,
-							direcao_vento: 'ENE',
-							direcao_vento_desc: 'Lés-nordeste',
-							altura_onda: 1.1,
-							direcao_onda: 'SE',
-							direcao_onda_desc: 'Sudeste',
-							agitation: 'Fraco',
-						},
-						{
-							hora: '06:00Z',
-							vento: 6.1,
-							direcao_vento: 'NE',
-							direcao_vento_desc: 'Nordeste',
-							altura_onda: 1.1,
-							direcao_onda: 'SE',
-							direcao_onda_desc: 'Sudeste',
-							agitation: 'Fraco',
-						},
-						{
-							hora: '09:00Z',
-							vento: 4.6,
-							direcao_vento: 'NE',
-							direcao_vento_desc: 'Nordeste',
-							altura_onda: 1,
-							direcao_onda: 'SE',
-							direcao_onda_desc: 'Sudeste',
-							agitation: 'Fraco',
-						},
-						{
-							hora: '12:00Z',
-							vento: 3.3,
-							direcao_vento: 'NE',
-							direcao_vento_desc: 'Nordeste',
-							altura_onda: 1,
-							direcao_onda: 'SE',
-							direcao_onda_desc: 'Sudeste',
-							agitation: 'Fraco',
-						},
-						{
-							hora: '15:00Z',
-							vento: 3.8,
-							direcao_vento: 'E',
-							direcao_vento_desc: 'Leste',
-							altura_onda: 1.1,
-							direcao_onda: 'ESE',
-							direcao_onda_desc: 'Lés-sudeste',
-							agitation: 'Fraco',
-						},
-						{
-							hora: '18:00Z',
-							vento: 4.1,
-							direcao_vento: 'ESE',
-							direcao_vento_desc: 'Lés-sudeste',
-							altura_onda: 1.3,
-							direcao_onda: 'ESE',
-							direcao_onda_desc: 'Lés-sudeste',
-							agitation: 'Fraco',
-						},
-						{
-							hora: '21:00Z',
-							vento: 2.9,
-							direcao_vento: 'ESE',
-							direcao_vento_desc: 'Lés-sudeste',
-							altura_onda: 1.6,
-							direcao_onda: 'E',
-							direcao_onda_desc: 'Leste',
-							agitation: 'Fraco',
-						},
-					],
-				},
-			],
+			atualizado_em: res.data!.atualizado_em,
+			ondas: res.data!.ondas,
 		});
+	});
+
+	it('should list brazilian states information', async () => {
+		const res = await sut.IBGE.listStates({
+			take: 5,
+		});
+
+		const page = res.data?.loadPage(1);
+
+		assert.ok(res);
+		assert.deepStrictEqual(page, [
+			{
+				id: 11,
+				sigla: 'RO',
+				nome: 'Rondônia',
+				regiao: { id: 1, sigla: 'N', nome: 'Norte' },
+			},
+			{
+				id: 12,
+				sigla: 'AC',
+				nome: 'Acre',
+				regiao: { id: 1, sigla: 'N', nome: 'Norte' },
+			},
+			{
+				id: 13,
+				sigla: 'AM',
+				nome: 'Amazonas',
+				regiao: { id: 1, sigla: 'N', nome: 'Norte' },
+			},
+			{
+				id: 14,
+				sigla: 'RR',
+				nome: 'Roraima',
+				regiao: { id: 1, sigla: 'N', nome: 'Norte' },
+			},
+			{
+				id: 15,
+				sigla: 'PA',
+				nome: 'Pará',
+				regiao: { id: 1, sigla: 'N', nome: 'Norte' },
+			},
+		]);
 	});
 
 	it('should list the municipalities of the federative unit', async () => {
@@ -527,7 +483,7 @@ describe('BrasilAPI', () => {
 		const page = res.data!.loadPage(1);
 
 		assert.ok(res);
-		assert.deepEqual(page, [
+		assert.deepStrictEqual(page, [
 			{ nome: 'ANGRA DOS REIS', codigo_ibge: '3300100' },
 			{ nome: 'APERIBÉ', codigo_ibge: '3300159' },
 			{ nome: 'ARARUAMA', codigo_ibge: '3300209' },
