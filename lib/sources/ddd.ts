@@ -20,7 +20,7 @@ export class BrasilAPIDDD extends Source implements IDDD {
 	 * @param {String} ddd - The area code to be fetched
 	 * @returns {Promise<Result<DDD>>}
 	 */
-	async get(ddd: string): Promise<Result<DDD>> {
+	async get(ddd: string) {
 		const res = await HttpsClient.GET<BrasilAPIResponse<DDD>>(
 			`${this.URL}/${ddd}`,
 		);
