@@ -4,11 +4,10 @@
 	"description": "Lightweight, easy-to-use & free of dependencies wrapper for BrasilAPI",
 	"author": "Matheus Torres <matheustrres.rj@gmail.com>",
 	"main": "./dist/index.js",
-	"typings": "./dist/index.d.ts",
-	"directories": {
-		"lib": "lib"
-	},
 	"license": "MIT",
+	"files": [
+		"./dist"
+	],
 	"repository": {
 		"type": "git",
 		"url": "git+ssh://git@github.com/matheustrres/brasilapi-wrapper.git"
