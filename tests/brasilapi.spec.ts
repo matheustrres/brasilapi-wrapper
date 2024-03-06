@@ -433,6 +433,18 @@ describe('BrasilAPI', () => {
 		});
 	});
 
+	it('should get brazilian state information', async () => {
+		const res = await sut.IBGE.getState('RJ');
+
+		assert.ok(res);
+		assert.deepStrictEqual(res.data, {
+			id: 33,
+			sigla: 'RJ',
+			nome: 'Rio de Janeiro',
+			regiao: { id: 3, sigla: 'SE', nome: 'Sudeste' },
+		});
+	});
+
 	it('should list brazilian states information', async () => {
 		const res = await sut.IBGE.listStates({
 			take: 5,
