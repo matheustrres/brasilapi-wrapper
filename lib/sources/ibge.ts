@@ -6,6 +6,7 @@ import { type BrasilAPIResponse, type Result } from '../typings/result';
 import { Paginator } from '../utils/paginator';
 
 interface IIBGE {
+	getState(code: number | string): Promise<Result<State>>;
 	listFederativeUnitMinicipalities(
 		siglaUF: string,
 		providers: string[],
@@ -19,6 +20,20 @@ interface IIBGE {
  */
 export class BrasilAPIIBGE extends Source implements IIBGE {
 	protected readonly URL = 'https://brasilapi.com.br/api/ibge';
+
+	/**
+	 * Gets state information from the acronym or code
+	 * 
+	 * @param {String | Number} code - The state acronym or code
+	 * @returns {Promise<Result<State>>}
+	 */
+	async getState(code: string | number) {
+		const res = await HttpsClient.GET<BrasilAPIResponse<State>>(
+			`${this.URL}/uf/v1/${code}`,
+		);
+
+		return this.followUp(res);
+	}
 
 	/**
 	 * Lists the municipalities of the federative unit
