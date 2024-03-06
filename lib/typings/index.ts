@@ -174,6 +174,19 @@ export type Municipality = {
 	codigo_ibge: string;
 };
 
+export type State = {
+	id: number;
+	sigla: string;
+	nome: string;
+	regiao: Region;
+};
+
+export type Region = {
+	id: number;
+	sigla: string;
+	nome: string;
+};
+
 export type ListParams = {
 	take?: number;
 	skip?: number;
