@@ -23,7 +23,7 @@ export class BrasilAPIIBGE extends Source implements IIBGE {
 
 	/**
 	 * Gets state information from the acronym or code
-	 * 
+	 *
 	 * @param {String | Number} code - The state acronym or code
 	 * @returns {Promise<Result<State>>}
 	 */
