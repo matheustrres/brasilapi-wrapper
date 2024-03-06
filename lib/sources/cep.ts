@@ -3,6 +3,7 @@ import { Source } from './source';
 import { HttpsClient } from '../clients/http-client';
 import { type CEP } from '../typings';
 import { type BrasilAPIResponse, type Result } from '../typings/result';
+import { clearString } from '../utils/clear-string';
 
 interface ICEP {
 	get(cep: string, version: 'v1' | 'v2'): Promise<Result<CEP>>;
@@ -22,6 +23,8 @@ export class BrasilAPICEP extends Source implements ICEP {
 	 * @returns {Promise<Result<CEP>>}
 	 */
 	async get(cep: string, version: 'v1' | 'v2' = 'v1') {
+		cep = clearString(cep);
+
 		if (!version || !['v1', 'v2'].includes(version)) {
 			throw new TypeError(
 				'Version is required and must evalute to "v1" or "v2"',
