@@ -175,7 +175,7 @@ describe('BrasilAPI', () => {
 	});
 
 	it('should get a CEP from v1', async () => {
-		const res = await sut.CEPs.getV1('08226021');
+		const res = await sut.CEPs.get('08226021', 'v1');
 
 		assert.ok(res);
 		assert.deepStrictEqual(res.data, {
@@ -189,7 +189,7 @@ describe('BrasilAPI', () => {
 	});
 
 	it('should get a CEP from v2', async () => {
-		const res = await sut.CEPs.getV2('22041011');
+		const res = await sut.CEPs.get('22041011', 'v2');
 
 		assert.ok(res);
 		assert.deepStrictEqual(res.data, {

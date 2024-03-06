@@ -5,8 +5,7 @@ import { type CEP } from '../typings';
 import { type BrasilAPIResponse, type Result } from '../typings/result';
 
 interface ICEP {
-	getV1(cep: string): Promise<Result<CEP>>;
-	getV2(cep: string): Promise<Result<CEP>>;
+	get(cep: string, version: 'v1' | 'v2'): Promise<Result<CEP>>;
 }
 
 /**
@@ -18,30 +17,21 @@ export class BrasilAPICEP extends Source implements ICEP {
 	/**
 	 * Gets information from a Zip Code with multiple fallback providers
 	 *
-	 * @version 1
 	 * @param {String} cep - The zip code to be fetched
+	 * @param {String} [version] - The CEP endpoint version to use (defaults to `v1`)
 	 * @returns {Promise<Result<CEP>>}
 	 */
-	async getV1(cep: string) {
+	async get(cep: string, version: 'v1' | 'v2' = 'v1') {
+		if (!version || !['v1', 'v2'].includes(version)) {
+			throw new TypeError(
+				'Version is required and must evalute to "v1" or "v2"',
+			);
+		}
+
 		const res = await HttpsClient.GET<BrasilAPIResponse<CEP>>(
-			`${this.URL}/v1/${cep}`,
+			`${this.URL}/${version}/${cep}`,
 		);
 
-		return this.followUp<CEP>(res);
-	}
-
-	/**
-	 * Gets information from a Zip Code with multiple fallback providers
-	 *
-	 * @version 2
-	 * @param {String} cep - The zip code to be fetched
-	 * @returns {Promise<Result<CEP>>}
-	 */
-	async getV2(cep: string) {
-		const res = await HttpsClient.GET<BrasilAPIResponse<CEP>>(
-			`${this.URL}/v2/${cep}`,
-		);
-
-		return this.followUp<CEP>(res);
+		return this.followUp(res);
 	}
 }
