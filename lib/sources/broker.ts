@@ -1,6 +1,6 @@
 import { Source } from './source';
 
-import { HttpsClient } from '../clients/http-client';
+import { makeGET } from '../clients/http-client';
 import { type ListParams, type Broker } from '../typings';
 import { type BrasilAPIResponse, type Result } from '../typings/result';
 import { Paginator } from '../utils/paginator';
@@ -23,9 +23,7 @@ export class BrasilAPIBroker extends Source implements IBroker {
 	 * @returns {Promise<Result<Broker>>}
 	 */
 	async get(cnpj: string) {
-		const res = await HttpsClient.GET<BrasilAPIResponse<Broker>>(
-			`${this.URL}/${cnpj}`,
-		);
+		const res = await makeGET<BrasilAPIResponse<Broker>>(`${this.URL}/${cnpj}`);
 
 		return this.followUp<Broker>(res);
 	}
@@ -41,7 +39,7 @@ export class BrasilAPIBroker extends Source implements IBroker {
 	 * @returns {Promise<Result<Paginator<Broker>>>}
 	 */
 	async list(params?: ListParams) {
-		const res = await HttpsClient.GET<BrasilAPIResponse<Broker[]>>(this.URL);
+		const res = await makeGET<BrasilAPIResponse<Broker[]>>(this.URL);
 
 		return this.followUp(
 			new Paginator({

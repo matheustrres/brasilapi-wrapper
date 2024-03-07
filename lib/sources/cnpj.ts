@@ -1,6 +1,6 @@
 import { Source } from './source';
 
-import { HttpsClient } from '../clients/http-client';
+import { makeGET } from '../clients/http-client';
 import { type CNPJ } from '../typings';
 import { type BrasilAPIResponse, type Result } from '../typings/result';
 import { clearString } from '../utils/clear-string';
@@ -24,9 +24,7 @@ export class BrasilAPICNPJ extends Source implements ICNPJ {
 	async get(cnpj: string) {
 		cnpj = clearString(cnpj);
 
-		const res = await HttpsClient.GET<BrasilAPIResponse<CNPJ>>(
-			`${this.URL}/${cnpj}`,
-		);
+		const res = await makeGET<BrasilAPIResponse<CNPJ>>(`${this.URL}/${cnpj}`);
 
 		return this.followUp<CNPJ>(res);
 	}

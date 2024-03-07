@@ -1,6 +1,6 @@
 import { Source } from './source';
 
-import { HttpsClient } from '../clients/http-client';
+import { makeGET } from '../clients/http-client';
 import {
 	type Weather,
 	type City,
@@ -42,9 +42,7 @@ export class BrasilAPICPTEC extends Source implements ICPTEC {
 	 * @returns {Promise<Result<Paginator<City>>>}
 	 */
 	async listCities(params?: ListParams) {
-		const res = await HttpsClient.GET<BrasilAPIResponse<City[]>>(
-			`${this.URL}/cidade`,
-		);
+		const res = await makeGET<BrasilAPIResponse<City[]>>(`${this.URL}/cidade`);
 
 		return this.followUp(
 			new Paginator({
@@ -66,7 +64,7 @@ export class BrasilAPICPTEC extends Source implements ICPTEC {
 	 * @returns {Promise<Result<Paginator<Weather>>>}
 	 */
 	async listWeatherInCapitals(params?: ListParams) {
-		const res = await HttpsClient.GET<BrasilAPIResponse<Weather[]>>(
+		const res = await makeGET<BrasilAPIResponse<Weather[]>>(
 			`${this.URL}/clima/capital`,
 		);
 
@@ -91,7 +89,7 @@ export class BrasilAPICPTEC extends Source implements ICPTEC {
 	 * @returns {Promise<Result<Paginator<City>>>}
 	 */
 	async getCity(cityName: string, params?: ListParams) {
-		const res = await HttpsClient.GET<BrasilAPIResponse<City[]>>(
+		const res = await makeGET<BrasilAPIResponse<City[]>>(
 			`${this.URL}/cidade/${cityName}`,
 		);
 
@@ -110,7 +108,7 @@ export class BrasilAPICPTEC extends Source implements ICPTEC {
 	 * @returns {Promise<Result<Weather>>}
 	 */
 	async getAirportWeather(icaoCode: string) {
-		const res = await HttpsClient.GET<BrasilAPIResponse<Weather>>(
+		const res = await makeGET<BrasilAPIResponse<Weather>>(
 			`${this.URL}/clima/aeroporto/${icaoCode}`,
 		);
 
@@ -124,7 +122,7 @@ export class BrasilAPICPTEC extends Source implements ICPTEC {
 	 * @returns {Promise<Result<WeatherForecast>>}
 	 */
 	async getCityWeatherForecast(cityCode: number) {
-		const res = await HttpsClient.GET<BrasilAPIResponse<WeatherForecast>>(
+		const res = await makeGET<BrasilAPIResponse<WeatherForecast>>(
 			`${this.URL}/clima/previsao/${cityCode}`,
 		);
 
@@ -138,7 +136,7 @@ export class BrasilAPICPTEC extends Source implements ICPTEC {
 	 * @returns {Promise<Result<OceanForecast>>}
 	 */
 	async getCityOceanForecast(cityCode: number) {
-		const res = await HttpsClient.GET<BrasilAPIResponse<OceanForecast>>(
+		const res = await makeGET<BrasilAPIResponse<OceanForecast>>(
 			`${this.URL}/ondas/${cityCode}`,
 		);
 

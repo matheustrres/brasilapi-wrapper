@@ -1,6 +1,6 @@
 import { Source } from './source';
 
-import { HttpsClient } from '../clients/http-client';
+import { makeGET } from '../clients/http-client';
 import { type ListParams, type Bank } from '../typings';
 import { type BrasilAPIResponse, type Result } from '../typings/result';
 import { Paginator } from '../utils/paginator';
@@ -23,9 +23,7 @@ export class BrasilAPIBank extends Source implements IBank {
 	 * @returns {Promise<Result<Bank>>}
 	 */
 	async get(code: string) {
-		const res = await HttpsClient.GET<BrasilAPIResponse<Bank>>(
-			`${this.URL}/${code}`,
-		);
+		const res = await makeGET<BrasilAPIResponse<Bank>>(`${this.URL}/${code}`);
 
 		return this.followUp<Bank>(res);
 	}
@@ -41,7 +39,7 @@ export class BrasilAPIBank extends Source implements IBank {
 	 * @returns {Promise<Result<Paginator<Bank>>>}
 	 */
 	async list(params?: ListParams) {
-		const res = await HttpsClient.GET<BrasilAPIResponse<Bank[]>>(this.URL);
+		const res = await makeGET<BrasilAPIResponse<Bank[]>>(this.URL);
 
 		return this.followUp(
 			new Paginator({

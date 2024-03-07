@@ -1,6 +1,6 @@
 import { Source } from './source';
 
-import { HttpsClient } from '../clients/http-client';
+import { makeGET } from '../clients/http-client';
 import { type DDD } from '../typings';
 import { type BrasilAPIResponse, type Result } from '../typings/result';
 
@@ -21,9 +21,7 @@ export class BrasilAPIDDD extends Source implements IDDD {
 	 * @returns {Promise<Result<DDD>>}
 	 */
 	async get(ddd: string) {
-		const res = await HttpsClient.GET<BrasilAPIResponse<DDD>>(
-			`${this.URL}/${ddd}`,
-		);
+		const res = await makeGET<BrasilAPIResponse<DDD>>(`${this.URL}/${ddd}`);
 
 		return this.followUp<DDD>(res);
 	}

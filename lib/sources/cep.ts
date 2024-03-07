@@ -1,6 +1,6 @@
 import { Source } from './source';
 
-import { HttpsClient } from '../clients/http-client';
+import { makeGET } from '../clients/http-client';
 import { type CEP } from '../typings';
 import { type BrasilAPIResponse, type Result } from '../typings/result';
 import { clearString } from '../utils/clear-string';
@@ -31,7 +31,7 @@ export class BrasilAPICEP extends Source implements ICEP {
 			);
 		}
 
-		const res = await HttpsClient.GET<BrasilAPIResponse<CEP>>(
+		const res = await makeGET<BrasilAPIResponse<CEP>>(
 			`${this.URL}/${version}/${cep}`,
 		);
 

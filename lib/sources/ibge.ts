@@ -1,6 +1,6 @@
 import { Source } from './source';
 
-import { HttpsClient } from '../clients/http-client';
+import { makeGET } from '../clients/http-client';
 import { type Municipality, type ListParams, type State } from '../typings';
 import { type BrasilAPIResponse, type Result } from '../typings/result';
 import { Paginator } from '../utils/paginator';
@@ -28,7 +28,7 @@ export class BrasilAPIIBGE extends Source implements IIBGE {
 	 * @returns {Promise<Result<State>>}
 	 */
 	async getState(code: string | number) {
-		const res = await HttpsClient.GET<BrasilAPIResponse<State>>(
+		const res = await makeGET<BrasilAPIResponse<State>>(
 			`${this.URL}/uf/v1/${code}`,
 		);
 
@@ -54,7 +54,7 @@ export class BrasilAPIIBGE extends Source implements IIBGE {
 	) {
 		const activeProviders = providers?.join(',') || '';
 
-		const res = await HttpsClient.GET<BrasilAPIResponse<Municipality[]>>(
+		const res = await makeGET<BrasilAPIResponse<Municipality[]>>(
 			`${this.URL}/municipios/v1/${siglaUF}?providers=${activeProviders}`,
 		);
 
@@ -77,9 +77,7 @@ export class BrasilAPIIBGE extends Source implements IIBGE {
 	 * @returns {Promise<Result<Paginator<State>>>}
 	 */
 	async listStates(params?: ListParams) {
-		const res = await HttpsClient.GET<BrasilAPIResponse<State[]>>(
-			`${this.URL}/uf/v1`,
-		);
+		const res = await makeGET<BrasilAPIResponse<State[]>>(`${this.URL}/uf/v1`);
 
 		return this.followUp(
 			new Paginator({
