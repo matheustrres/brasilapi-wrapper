@@ -1,0 +1,29 @@
+# node
+node_modules
+package-lock.json
+yarn.lock
+
+# definitions
+!**/*.d.ts
+!*.d.ts
+
+# ides
+.vscode
+
+# env
+.env
+
+# lib
+lib
+
+# tests
+tests
+
+# linters
+.eslintrc
+.eslintignore
+.prettierrc
+
+# tsconfig
+tsconfig.json
+tsconfig.build.json
