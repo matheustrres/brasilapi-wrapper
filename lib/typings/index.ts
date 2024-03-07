@@ -54,6 +54,11 @@ export type CNPJ = {
 	razao_social: string;
 	nome_fantasia: string;
 	situacao_cadastral: number;
+	pais?: string | null;
+	email?: string | null;
+	codigo_pais?: string | null;
+	codigo_porte?: string | null;
+	natureza_juridica?: string | null;
 	descricao_situacao_cadastral: string;
 	data_situacao_cadastral: string;
 	motivo_situacao_cadastral: number;
@@ -78,10 +83,12 @@ export type CNPJ = {
 	capital_social: number;
 	porte: number;
 	descricao_porte: string;
-	opcao_pelo_simples: boolean;
+	opcao_pelo_simples: boolean | null;
 	data_opcao_pelo_simples: unknown | null;
 	data_exclusao_do_simples: unknown | null;
-	opcao_pelo_mei: boolean;
+	data_opcao_pelo_mei?: string | null;
+	data_exclusao_do_mei?: string | null;
+	opcao_pelo_mei: boolean | null;
 	situacao_especial: unknown | null;
 	data_situacao_especial: unknown | null;
 	cnaes_secundarios: CNAE[];
