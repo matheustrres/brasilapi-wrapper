@@ -19,9 +19,5 @@ export type {
 	Weather,
 	WeatherForecast,
 } from './typings';
-export type {
-	Failure,
-	Result,
-	Success,
-} from './typings/result';
+export type { Failure, Result, Success } from './typings/result';
 export * from './brasilapi';
