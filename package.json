@@ -20,7 +20,6 @@
 		"build": "tsc --build ./tsconfig.build.json",
 		"bundle": "npm run build && npm pack",
 		"test": "glob -c \"node --import tsx --no-warnings --test\" \"./tests/*.{spec,test}.ts\"",
-		"test:e2e": "glob -c \"node --env-file .env --import tsx --no-warnings --test\" \"./tests/e2e/*.{spec,test}.ts\"",
 		"format": "prettier --write \"{lib,tests}/**/*.ts\"",
 		"lint": "eslint \"{lib,tests}/**/*.ts\" --fix"
 	},
