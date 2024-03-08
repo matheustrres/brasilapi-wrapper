@@ -11,9 +11,9 @@ A lightweight, easy-to-use & free of dependencies wrapper for **[BrasilAPI](http
 Install the package with your package manager:
 
 ```bash
-npm install @matheustrres/brasilapi-wrapper
-yarn add @matheustrres/brasilapi-wrapper
-pnpm add @matheustrres/brasilapi-wrapper
+npm install @matheustrres/brasilapi
+yarn add @matheustrres/brasilapi
+pnpm add @matheustrres/brasilapi
 ```
 
 ## Usage
