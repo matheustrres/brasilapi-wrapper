@@ -19,7 +19,8 @@ export class Paginator<T> {
 	itemsPerPage: number;
 
 	#items: T[];
-	#pages!: T[][];
+
+	#pages = new Map<number, T[]>();
 
 	/**
 	 * Create a new Paginator instance
@@ -30,13 +31,13 @@ export class Paginator<T> {
 	 * @param {Number} [config.take] - The number of items to be taken
 	 * @param {Number} [config.skip] - The number of items to be skipped
 	 */
-	constructor({ items, itemsPerPage, skip, take }: PaginatorConfig<T>) {
-		this.#items = items;
+	constructor(cfg: PaginatorConfig<T>) {
+		this.#items = cfg.items;
 
-		this.#skipItems(skip);
-		this.#takeItems(take);
+		this.#skipItems(cfg.skip);
+		this.#takeItems(cfg.take);
 
-		this.itemsPerPage = itemsPerPage ? Math.floor(itemsPerPage) : 20;
+		this.itemsPerPage = cfg.itemsPerPage ? Math.floor(cfg.itemsPerPage) : 20;
 	}
 
 	/**
@@ -45,11 +46,14 @@ export class Paginator<T> {
 	 * @returns {T[][]}
 	 */
 	loadPages(): T[][] {
-		if (!this.#pages || !this.#pages.length) {
-			this.#pages = this.#chunkArr(this.#items, this.itemsPerPage);
+		const pages: T[][] = [];
+		const totalPages = Math.ceil(this.#items.length / this.itemsPerPage);
+
+		for (let i = 0; i < totalPages; i++) {
+			pages.push(this.loadPage(i));
 		}
 
-		return this.#pages;
+		return pages;
 	}
 
 	/**
@@ -59,10 +63,18 @@ export class Paginator<T> {
 	 * @returns {T[]}
 	 */
 	loadPage(p = 1): T[] {
-		const pages = this.loadPages();
-		const page = pages[p - 1];
+		if (!Number.isInteger(p) || p <= 0) p = 1;
 
-		return page || [];
+		if (!this.#pages.has(p)) {
+			const start = (p - 1) * this.itemsPerPage;
+			const end = Math.min(start + this.itemsPerPage, this.#items.length);
+
+			const pageItems = this.#items.slice(start, end);
+
+			this.#pages.set(p, pageItems);
+		}
+
+		return this.#pages.get(p) || [];
 	}
 
 	/**
@@ -95,23 +107,5 @@ export class Paginator<T> {
 	 */
 	#skipItems(amount = 0): void {
 		this.#items = this.#sliceArr(this.#items, amount);
-	}
-
-	/**
-	 * Divides the list of items into pages according to the specified size.
-	 * Each page will contain a maximum number of items equal to the specified size.
-	 * If the division is not uniform, the last page may contain fewer items.
-	 *
-	 * @param {T[]} items - The items to be chunked
-	 * @param {Number} chunkSize - The amount of items per page
-	 * @returns {T[][]}
-	 */
-	#chunkArr(items: T[], chunkSize: number): T[][] {
-		const pages: T[][] = [];
-
-		for (let i = 0; i < items.length; i += chunkSize)
-			pages.push(items.slice(i, i + chunkSize));
-
-		return pages;
 	}
 }
