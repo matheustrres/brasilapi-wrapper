@@ -372,6 +372,27 @@ describe('BrasilAPI', () => {
 		});
 	});
 
+	it('should get vehicle information according to FIPE table', async () => {
+		const res = await sut.FIPE.getVehicle('001004-9', {
+			take: 1,
+		});
+
+		const vehicle = res.data!.loadPage(1)[0];
+
+		assert.deepStrictEqual(vehicle, {
+			valor: vehicle!.valor,
+			marca: vehicle!.marca,
+			modelo: vehicle!.modelo,
+			anoModelo: vehicle!.anoModelo,
+			combustivel: vehicle!.combustivel,
+			codigoFipe: vehicle!.codigoFipe,
+			mesReferencia: vehicle!.mesReferencia,
+			tipoVeiculo: vehicle!.tipoVeiculo,
+			siglaCombustivel: vehicle!.siglaCombustivel,
+			dataConsulta: vehicle!.dataConsulta,
+		});
+	});
+
 	it('should get brazilian state information', async () => {
 		const { data: state } = await sut.IBGE.getState('RJ');
 
