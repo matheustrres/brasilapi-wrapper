@@ -118,6 +118,19 @@ export type City = {
 	id: string;
 };
 
+export type FIPEVehicle = {
+	valor: string;
+	marca: string;
+	modelo: string;
+	anoModelo: number;
+	combustivel: string;
+	codigoFipe: string;
+	mesReferencia: string;
+	tipoVeiculo: number;
+	siglaCombustivel: string;
+	dataConsulta: string;
+};
+
 export type Weather = {
 	umidade: number;
 	intensidade: string;

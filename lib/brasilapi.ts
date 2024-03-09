@@ -4,6 +4,7 @@ import { BrasilAPICEP } from './sources/cep';
 import { BrasilAPICNPJ } from './sources/cnpj';
 import { BrasilAPICPTEC } from './sources/cptec';
 import { BrasilAPIDDD } from './sources/ddd';
+import { BrasilAPIFIPE } from './sources/fipe';
 import { BrasilAPIIBGE } from './sources/ibge';
 
 /**
@@ -33,6 +34,10 @@ export class BrasilAPI {
 
 	get DDDs() {
 		return new BrasilAPIDDD();
+	}
+
+	get FIPE() {
+		return new BrasilAPIFIPE();
 	}
 
 	get IBGE() {
