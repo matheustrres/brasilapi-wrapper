@@ -118,7 +118,7 @@ export type City = {
 	id: string;
 };
 
-export type FIPEVehicle = {
+export type Vehicle = {
 	valor: string;
 	marca: string;
 	modelo: string;
@@ -129,6 +129,11 @@ export type FIPEVehicle = {
 	tipoVeiculo: number;
 	siglaCombustivel: string;
 	dataConsulta: string;
+};
+
+export type ReferenceTable = {
+	codigo: number;
+	mes: string;
 };
 
 export type Weather = {
