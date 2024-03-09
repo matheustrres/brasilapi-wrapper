@@ -393,6 +393,29 @@ describe('BrasilAPI', () => {
 		});
 	});
 
+	it('should list the existing reference tables', async () => {
+		const res = await sut.FIPE.listReferenceTables({
+			take: 3,
+		});
+
+		const referenceTableList = res.data!.loadPage();
+
+		assert.deepStrictEqual(referenceTableList, [
+			{
+				codigo: referenceTableList[0]!.codigo,
+				mes: referenceTableList[0]!.mes,
+			},
+			{
+				codigo: referenceTableList[1]!.codigo,
+				mes: referenceTableList[1]!.mes,
+			},
+			{
+				codigo: referenceTableList[2]!.codigo,
+				mes: referenceTableList[2]!.mes,
+			},
+		]);
+	});
+
 	it('should get brazilian state information', async () => {
 		const { data: state } = await sut.IBGE.getState('RJ');
 
