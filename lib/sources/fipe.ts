@@ -79,11 +79,22 @@ export class BrasilAPIFIPE extends Source implements IFIPE {
 		);
 	}
 
+	/**
+	 *
+	 * @param {VehicleBrand} [vehicleType] - The vehicle type to search for
+	 * @param {ListParams} [params] - The listing parameters
+	 * @param {Number} [params.itemsPerPage] - The limit of items per page
+	 * @param {Number} [params.page] - The page number to start with
+	 * @param {Number} [params.skip] - The amount of items to skip
+	 * @param {Number} [params.take] - The amount of items to take
+	 * @param {Number} [referenceTable] - The reference table code
+	 * @returns {Promise<Result<Paginator<VehicleBrand>>>}
+	 */
 	async listVehicleBrandsByType(
 		vehicleType?: VehicleType,
 		params?: ListParams,
 		referenceTable?: number,
-	): Promise<Result<Paginator<VehicleBrand>>> {
+	) {
 		let url = `${this.URL}/marcas/v1/${vehicleType}`;
 
 		if (referenceTable) {
