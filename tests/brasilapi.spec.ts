@@ -416,6 +416,24 @@ describe('BrasilAPI', () => {
 		]);
 	});
 
+	it('should list vehicle brands by type', async () => {
+		const res = await sut.FIPE.listVehicleBrandsByType(
+			'carros',
+			{
+				take: 3,
+			},
+			271,
+		);
+
+		const vehicleBrandList = res.data!.loadPage(1);
+
+		assert.deepStrictEqual(vehicleBrandList, [
+			{ nome: vehicleBrandList[0]!.nome, valor: vehicleBrandList[0]!.valor },
+			{ nome: vehicleBrandList[1]!.nome, valor: vehicleBrandList[1]!.valor },
+			{ nome: vehicleBrandList[2]!.nome, valor: vehicleBrandList[2]!.valor },
+		]);
+	});
+
 	it('should get brazilian state information', async () => {
 		const { data: state } = await sut.IBGE.getState('RJ');
 
