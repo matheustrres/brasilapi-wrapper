@@ -80,6 +80,7 @@ export class BrasilAPIFIPE extends Source implements IFIPE {
 	}
 
 	/**
+	 * Lists vehicle brands according to vehicle type
 	 *
 	 * @param {VehicleBrand} [vehicleType] - The vehicle type to search for
 	 * @param {ListParams} [params] - The listing parameters
