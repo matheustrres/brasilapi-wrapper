@@ -1,7 +1,13 @@
 import { Source } from './source';
 
 import { makeGET } from '../clients/http-client';
-import { type Vehicle, type ListParams, type ReferenceTable } from '../typings';
+import {
+	type Vehicle,
+	type ListParams,
+	type ReferenceTable,
+	type VehicleType,
+	type VehicleBrand,
+} from '../typings';
 import { type BrasilAPIResponse, type Result } from '../typings/result';
 import { Paginator } from '../utils/paginator';
 
@@ -13,6 +19,11 @@ interface IFIPE {
 	listReferenceTables(
 		params?: ListParams,
 	): Promise<Result<Paginator<ReferenceTable>>>;
+	listVehicleBrandsByType(
+		vehicleType?: VehicleType,
+		params?: ListParams,
+		referenceTable?: number,
+	): Promise<Result<Paginator<VehicleBrand>>>;
 }
 
 /**
@@ -59,6 +70,27 @@ export class BrasilAPIFIPE extends Source implements IFIPE {
 		const res = await makeGET<BrasilAPIResponse<ReferenceTable[]>>(
 			`${this.URL}/tabelas/v1`,
 		);
+
+		return this.followUp(
+			new Paginator({
+				items: res,
+				...params,
+			}),
+		);
+	}
+
+	async listVehicleBrandsByType(
+		vehicleType?: VehicleType,
+		params?: ListParams,
+		referenceTable?: number,
+	): Promise<Result<Paginator<VehicleBrand>>> {
+		let url = `${this.URL}/marcas/v1/${vehicleType}`;
+
+		if (referenceTable) {
+			url += `?tabela_referencia=${referenceTable}`;
+		}
+
+		const res = await makeGET<BrasilAPIResponse<VehicleBrand[]>>(url);
 
 		return this.followUp(
 			new Paginator({

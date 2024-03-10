@@ -131,6 +131,13 @@ export type Vehicle = {
 	dataConsulta: string;
 };
 
+export type VehicleType = 'caminhoes' | 'carros' | 'motos';
+
+export type VehicleBrand = {
+	nome: string;
+	valor: string;
+};
+
 export type ReferenceTable = {
 	codigo: number;
 	mes: string;
