@@ -6,6 +6,7 @@ import { BrasilAPICPTEC } from './sources/cptec';
 import { BrasilAPIDDD } from './sources/ddd';
 import { BrasilAPIFIPE } from './sources/fipe';
 import { BrasilAPIIBGE } from './sources/ibge';
+import { BrasilAPIISBN } from './sources/isbn';
 
 /**
  * Represents the main BrasilAPI client wrapper
@@ -42,5 +43,9 @@ export class BrasilAPI {
 
 	get IBGE() {
 		return new BrasilAPIIBGE();
+	}
+
+	get ISBN() {
+		return new BrasilAPIISBN();
 	}
 }

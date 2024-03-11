@@ -219,6 +219,36 @@ export type Region = {
 	nome: string;
 };
 
+export type Book = {
+	isbn: string;
+	title: string;
+	subtitle: string | null;
+	authors: string[];
+	publisher: string;
+	synopsis: string;
+	dimensions: Dimensions;
+	year: number;
+	format: string;
+	page_count: number;
+	subjects: string[];
+	location: string;
+	retail_price: number | null;
+	cover_url: string | null;
+	provider: string;
+};
+
+export type Dimensions = {
+	width: number;
+	height: number;
+	unit: string;
+};
+
+export type Provider =
+	| 'cbl'
+	| 'mercado-editorial'
+	| 'open-library'
+	| 'google-books';
+
 export type ListParams = {
 	take?: number;
 	skip?: number;
