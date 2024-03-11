@@ -506,6 +506,28 @@ describe('BrasilAPI', () => {
 		]);
 	});
 
+	it('should get a book through ISBN', async () => {
+		const { data: book } = await sut.ISBN.getBook('9788545702870');
+
+		assert.deepStrictEqual(book, {
+			isbn: book!.isbn,
+			title: book!.title,
+			subtitle: book!.subtitle,
+			authors: book!.authors,
+			publisher: book!.publisher,
+			synopsis: book!.synopsis,
+			dimensions: book!.dimensions,
+			year: book!.year,
+			format: book!.format,
+			page_count: book!.page_count,
+			subjects: book!.subjects,
+			location: book!.location,
+			retail_price: book!.retail_price,
+			cover_url: book!.cover_url,
+			provider: book!.provider,
+		});
+	});
+
 	it('should get a DDD', async () => {
 		const { data: ddd } = await sut.DDDs.get('21');
 
